@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    mat-card {
+        max-width: 400px;
+        width: 100%;
+        padding: 20px;
+
+        @media screen and (max-width: 500px) {
+            max-width: 90%;
+        }
+
+        mat-card-title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: rgb(210, 141, 227);
+
+            @media screen and (max-width: 500px) {
+                font-size: 20px;
+            }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            mat-form-field {
+                width: 100%;
+                margin-bottom: 20px;
+
+                @media screen and (max-width: 500px) {
+                    margin-bottom: 10px;
+                }
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.error-snackbar {
+    background-color: red !important;
+}
