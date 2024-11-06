@@ -7,19 +7,22 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']  // Fixed styleUrls
+  styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent {
   signupForm!: FormGroup;
   hidePassword = true;
+  selectedFile!: File;
+  imageError: boolean = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService,
               private snackbar: MatSnackBar, private router: Router) {
     this.signupForm = this.fb.group({
-      name: [null, [Validators.required]],
+      firstName: [null, [Validators.required]],
+      lastName: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]],
-      confirmPassword: [null, [Validators.required]]
+      password: [null, [Validators.required, Validators.minLength(8)]],
+      contact: [null, [Validators.required]],  
     });
   }
 
@@ -27,32 +30,41 @@ export class SignupComponent {
     this.hidePassword = !this.hidePassword;
   }
 
-  passwordMatchValidator(): void {
-    const password = this.signupForm.get('password');
-    const confirmPassword = this.signupForm.get('confirmPassword');
-
-    if (password?.value !== confirmPassword?.value) {
-      confirmPassword?.setErrors({ mismatch: true });
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      this.selectedFile = file;
+      this.imageError = false;
     } else {
-      confirmPassword?.setErrors(null);
+      this.imageError = true;
     }
   }
 
   onSubmit() {
-    this.passwordMatchValidator();  // Call the validator before submission
-
-    if (this.signupForm.invalid) {
+    if (this.signupForm.invalid || !this.selectedFile) {
       this.snackbar.open("Please fill in all required fields correctly", "Close", { duration: 5000, panelClass: "error-snackbar" });
       return;
     }
 
-    this.authService.signup(this.signupForm.value).subscribe((res) => {
-      console.log(res);
-      if (res.id != null) {
-        this.snackbar.open("Signup successful", "Close", { duration: 5000 });
-        this.router.navigateByUrl("/login");
-      } else {
-        this.snackbar.open("Signup failed. Try again!", "Close", { duration: 5000, panelClass: "error-snackbar" });
+    const formData = new FormData();
+    formData.append('firstName', this.signupForm.get('firstName')?.value);
+    formData.append('lastName', this.signupForm.get('lastName')?.value);
+    formData.append('email', this.signupForm.get('email')?.value);
+    formData.append('password', this.signupForm.get('password')?.value);
+    formData.append('contact', this.signupForm.get('contact')?.value);
+    formData.append('image', this.selectedFile);  
+
+    this.authService.signup(formData).subscribe({
+      next: (res) => {
+        if (res.token) {
+          this.snackbar.open("Signup successful", "Close", { duration: 5000 });
+          this.router.navigateByUrl("/login");
+        } else {
+          this.snackbar.open("Signup failed. Try again!", "Close", { duration: 5000, panelClass: "error-snackbar" });
+        }
+      },
+      error: (err) => {
+        this.snackbar.open("An error occurred during signup.", "Close", { duration: 5000, panelClass: "error-snackbar" });
       }
     });
   }
