@@ -64,6 +64,22 @@
     }
 }
 
+.profile-image-label {
+    cursor: pointer;
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #161215;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .file-input-container label {
     color: white;
     font-size: 15px;

@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrl: './signup.component.scss'
 })
 export class SignupComponent {
   signupForm!: FormGroup;
   hidePassword = true;
   selectedFile!: File;
+  imageSrc: string | null = null;
   imageError: boolean = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService,
@@ -30,13 +31,20 @@ export class SignupComponent {
     this.hidePassword = !this.hidePassword;
   }
 
-  onFileSelected(event: any) {
-    const file: File = event.target.files[0];
+  onFileSelected(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
     if (file && file.type.startsWith('image/')) {
       this.selectedFile = file;
       this.imageError = false;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imageSrc = reader.result as string;
+      };
+      reader.readAsDataURL(file);
     } else {
       this.imageError = true;
+      this.imageSrc = null;
     }
   }
 
@@ -54,7 +62,7 @@ export class SignupComponent {
     formData.append('contact', this.signupForm.get('contact')?.value);
     formData.append('image', this.selectedFile);  
 
-    this.authService.signup(formData).subscribe({
+    this.authService.register(formData).subscribe({
       next: (res) => {
         if (res.token) {
           this.snackbar.open("Signup successful", "Close", { duration: 5000 });

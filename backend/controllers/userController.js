@@ -30,7 +30,7 @@ module.exports = {
   
       const token = generateToken({ userId: user.id, role: user.role });
       // set the image as an url for the user side
-      if(req.file.path )  user.image = `${req.protocol}://${req.get('host')}/uploads/${user.image}`;
+      if(user.image )  user.image = `${req.protocol}://${req.get('host')}/uploads/${user.image}`;
       res.status(200).json({ token , user });
     } catch (err) {
       res.status(500).json({ message: err.message });
@@ -41,17 +41,17 @@ module.exports = {
     const { firstName, lastName, contact, email, password, image } = req.body;
   
     if(!firstName || !lastName || !contact || !email || !password ) {
-      if(req.file.path )  fs.unlinkSync(req.file.path);
+      if(req.file && req.file.path)  fs.unlinkSync(req.file.path);
       return res.status(400).json({ message: 'All fields are required.' });
     }
   
     if(password.length < 8) {
-        if(req.file.path )  fs.unlinkSync(req.file.path);
+        if(req.file && req.file.path)  fs.unlinkSync(req.file.path);
       return res.status(400).json({ message: 'Password must be at least 8 characters.' });
     }
   
     if(await User.findByEmail(email)) {
-      if(req.file.path )  fs.unlinkSync(req.file.path);
+      if(req.file && req.file.path)  fs.unlinkSync(req.file.path);
       return res.status(409).json({ message: 'E-mail already exists.' });
     }
   
@@ -59,11 +59,11 @@ module.exports = {
       const user = await User.create({ firstName, lastName, contact, email, passwordHash: password, image });
       const token = generateToken({ userId: user.id, role: user.role });
       // set the image as an url for the user side
-      if(req.file.path )  user.image = `${req.protocol}://${req.get('host')}/uploads/${user.image}`;
+      if(user.image )  user.image = `${req.protocol}://${req.get('host')}/uploads/${user.image}`;
       res.status(201).json({token, user});
     } catch (err) {
       // delete the image if the user creation failed
-      if(req.file.path )  fs.unlinkSync(req.file.path);
+      if(req.file && req.file.path)  fs.unlinkSync(req.file.path);
       res.status(500).json({ message: err.message });
     }
   },

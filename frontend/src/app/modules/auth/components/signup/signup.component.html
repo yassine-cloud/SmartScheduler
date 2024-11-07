@@ -6,12 +6,15 @@
             <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
 
                
+                <!-- Profile Image Upload with Preview -->
                 <div class="file-input-container">
-                    <label for="file-upload">Profile Image</label>
-                    <input type="file" id="file-upload" (change)="onFileSelected($event)" required>
-                    <mat-error *ngIf="imageError">
-                        Please select a valid image file.
-                    </mat-error>
+                    <label for="file-upload" class="profile-image-label">
+                        <div class="profile-image" [style.backgroundImage]="imageSrc ? 'url(' + imageSrc + ')' : ''">
+                            <span *ngIf="!imageSrc" class="placeholder">+</span>
+                        </div>
+                    </label>
+                    <input type="file" id="file-upload" (change)="onFileSelected($event)" hidden accept="image/*">
+                    <mat-error *ngIf="imageError">Please select a valid image file.</mat-error>
                 </div>
                 
              

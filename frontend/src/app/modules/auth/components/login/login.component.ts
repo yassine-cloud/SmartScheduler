@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthService } from '../../../../core/services/auth/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
@@ -17,7 +17,6 @@ export class LoginComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private snackbar: MatSnackBar,
-    private router: Router
   ) {
     this.loginForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
@@ -35,13 +34,16 @@ export class LoginComponent {
       return;
     }
 
-    this.authService.login(this.loginForm.value).subscribe((res) => {
-      if (res.id != null) {
+    this.authService.login(this.loginForm.value).subscribe({
+     
+      next: () => {
         this.snackbar.open("Login successful", "Close", { duration: 5000 });
-        this.router.navigateByUrl("/dashboard"); // Change to your desired route
-      } else {
+      },
+      error: (error) => {
+        console.error(error);
         this.snackbar.open("Login failed. Try again!", "Close", { duration: 5000, panelClass: "error-snackbar" });
       }
     });
   }
+
 }

@@ -10,5 +10,9 @@ import { AppComponent } from './app.component';
     ServerModule,
   ],
   bootstrap: [AppComponent],
+  providers: [
+    // Add universal-only providers here
+    
+  ],
 })
 export class AppServerModule {}
