@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const fsService = require('../services/fsService'); // Import file system service
+const fsService = require('../services/fsService'); 
 
-// get an uploaded file by the folder and file name
+
 router.get('/:folder/:file', (req, res) => {
   const folder = req.params.folder;
   const file = req.params.file;
@@ -17,7 +17,7 @@ router.get('/:folder/:file', (req, res) => {
 
 });
 
-// get an uploaded file by the folder and file name
+
 router.get('/:folder1/:folder2/:file', (req, res) => {
   const folder1 = req.params.folder1;
   const folder2 = req.params.folder2;
