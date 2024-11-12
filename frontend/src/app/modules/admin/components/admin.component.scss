@@ -1,0 +1,78 @@
+.admin-forms {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  
+  .input-field {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    opacity: 0.9;
+  }
+  
+  button[type="submit"] {
+    color: white;
+  }
+  
+  button[type="submit"].mat-raised-button {
+    background-color: #4caf50;
+  }
+  
+  button[type="submit"].mat-raised-button[color="primary"] {
+    background-color: #4caf50;
+  }
+  
+  button[type="submit"].mat-raised-button[color="accent"] {
+    background-color: #03a9f4;
+  }
+  
+  button[type="submit"].mat-raised-button[color="warn"] {
+    background-color: #f44336;
+  }
+  
+  mat-select {
+    margin-top: 10px;
+  }
+  
+  input {
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  input[formControlName] {
+    margin-bottom: 10px;
+  }
+  

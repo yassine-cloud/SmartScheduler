@@ -28,7 +28,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     DemoMaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+  
   ],
   providers: [
     provideClientHydration(),
