@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { UserFormDialogComponent } from './user-form-dialog/user-form-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AdminService } from '../services/admin.service';
+import { AdminService } from '../../../services/admin.service';
+import { UserFormDialogComponent } from '../user-form-dialog/user-form-dialog.component';
+import { AuthService } from '../../../../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -15,7 +16,8 @@ export class AdminComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -25,7 +27,8 @@ export class AdminComponent implements OnInit {
   loadUsers(): void {
     this.adminService.getUsers().subscribe(
       (data: any) => {
-        this.users = data;
+        const idUser = this.authService.currentUser()?.id;
+        this.users = data.filter((user: any) => user.id !== idUser);
       },
       (error: any) => {
         console.error('Error fetching users', error);
@@ -35,7 +38,9 @@ export class AdminComponent implements OnInit {
 
   openModifyUserDialog(user: any): void {
     const dialogRef = this.dialog.open(UserFormDialogComponent, {
-      width: '500px',
+      width: '600px',
+      height: '500px',
+
       data: { user }
     });
 
