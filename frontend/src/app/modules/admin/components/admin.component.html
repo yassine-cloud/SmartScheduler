@@ -2,7 +2,7 @@
   <h2>User List</h2>
 
   <table mat-table [dataSource]="users">
-    <!-- User Details Columns -->
+
     <ng-container matColumnDef="firstName">
       <th mat-header-cell *matHeaderCellDef>First Name</th>
       <td mat-cell *matCellDef="let user">{{ user.firstName }}</td>
@@ -28,7 +28,6 @@
       <td mat-cell *matCellDef="let user">{{ user.status }}</td>
     </ng-container>
 
-    <!-- Actions Column -->
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let user">
