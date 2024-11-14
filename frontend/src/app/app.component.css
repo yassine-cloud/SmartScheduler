@@ -5,11 +5,15 @@
 }
 
 .navbar-brand{
+    display: flex;
+    align-items: center;
     font-size:  20px;
     font-weight: 600;
     margin-right: 16px;
 }
-
+.navbar-brand img {
+    margin-right: 8px; 
+}
 .spacer{
     flex: 1;
 }
