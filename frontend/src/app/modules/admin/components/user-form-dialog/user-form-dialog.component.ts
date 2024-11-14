@@ -16,13 +16,13 @@ export class UserFormDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.userForm = this.fb.group({
-      id: [data ? data.id : '', Validators.required],
-      firstName: [data ? data.firstName : '', Validators.required],
-      lastName: [data ? data.lastName : '', Validators.required],
-      email: [data ? data.email : '', [Validators.required, Validators.email]],
-      contact: [data ? data.contact : '', Validators.required],
-      role: [data ? data.role : 'user', Validators.required],
-      status: [data ? data.status : 'active', Validators.required]
+      id: [data.user ? data.user.id : '', Validators.required],
+      firstName: [data.user ? data.user.firstName : '', Validators.required],
+      lastName: [data.user ? data.user.lastName : '', Validators.required],
+      email: [data.user ? data.user.email : '', [Validators.required, Validators.email]],
+      contact: [data.user ? data.user.contact : '', Validators.required],
+      role: [data.user ? data.user.role : 'user', Validators.required],
+      status: [data.user ? data.user.status : 'active', Validators.required]
     });
   }
 

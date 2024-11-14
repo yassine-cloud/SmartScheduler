@@ -6,21 +6,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AdminService {
-  private apiUrl = 'http://localhost:3000';  // Change this to your backend API URL
+  private apiUrl = 'http://localhost:3000'; // Change this to your backend API URL
 
   constructor(private http: HttpClient) {}
-
-  addUser(user: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/users`, user);
-  }
 
   modifyUser(user: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/users/${user.id}`, user);
   }
 
-
-  deleteUser(userId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/users/${userId}`);
+  updateUserStatus(userId: string, status: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/users/${userId}/status`, { status });
   }
 
   getUsers(): Observable<any> {
