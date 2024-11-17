@@ -81,6 +81,11 @@ User.init({
         // it will be a relative path to the image
         type: DataTypes.STRING,
         allowNull: true
+    },
+    is_verified: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 }, {
   sequelize, // Passing the `sequelize` instance is required

@@ -3,6 +3,7 @@ const { generateToken } = require('../utils/jwt');
 const { comparePassword } = require('../utils/crypt');
 require('dotenv').config();
 const fs = require('fs');
+const verificationTokenController = require('./verificationTokenController');
 
 
 module.exports = {
@@ -24,8 +25,12 @@ module.exports = {
         return res.status(401).json({ message: 'E-mail or Password is incorrect.' });
       }
   
-      if(user.status === 'inactive' && user.role !== 'admin') {
+      if(user.status === 'inactive' ) {
         return res.status(403).json({ message: 'Your account is inactive.\nYou have to contact the Admin to resolve the problem.' });
+      }
+
+      if(user.is_verified === false) {
+        return res.status(402).json({ message: 'Your email is not verified yet.\nPlease check your email to verify it.' });
       }
   
       const token = generateToken({ userId: user.id, role: user.role });
@@ -41,40 +46,49 @@ module.exports = {
     const { firstName, lastName, contact, email, password, image } = req.body;
   
     if(!firstName || !lastName || !contact || !email || !password ) {
-      if(req.file && req.file.path)  fs.unlinkSync(req.file.path);
+      if(req.file?.path)  fs.unlinkSync(req.file.path);
       return res.status(400).json({ message: 'All fields are required.' });
     }
   
     if(password.length < 8) {
-        if(req.file && req.file.path)  fs.unlinkSync(req.file.path);
+        if(req.file?.path)  fs.unlinkSync(req.file.path);
       return res.status(400).json({ message: 'Password must be at least 8 characters.' });
     }
   
     if(await User.findByEmail(email)) {
-      if(req.file && req.file.path)  fs.unlinkSync(req.file.path);
+      if(req.file?.path)  fs.unlinkSync(req.file.path);
       return res.status(409).json({ message: 'E-mail already exists.' });
     }
-  
+    let user;
     try {
-      const user = await User.create({ firstName, lastName, contact, email, passwordHash: password, image });
-      const token = generateToken({ userId: user.id, role: user.role });
-      // set the image as an url for the user side
-      if(user.image )  user.image = `${req.protocol}://${req.get('host')}/uploads/${user.image}`;
-      res.status(201).json({token, user});
+      user = await User.create({ firstName, lastName, contact, email, passwordHash: password, image });
+      // const token = generateToken({ userId: user.id, role: user.role });
+      // // set the image as an url for the user side
+      // if(user.image )  user.image = `${req.protocol}://${req.get('host')}/uploads/${user.image}`;
+      // res.status(201).json({token, user});
     } catch (err) {
       // delete the image if the user creation failed
-      if(req.file && req.file.path)  fs.unlinkSync(req.file.path);
-      res.status(500).json({ message: err.message });
+      if(req.file?.path)  fs.unlinkSync(req.file.path);
+      return res.status(500).json({ message: err.message });
+    }
+    try {
+      if (user) {
+        await verificationTokenController.createVerificationNewUser(user.id, user.email);
+        res.status(201).json({ message: 'User created successfully. Please verify your email.' });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
   },
 
   getAllUsers : async (req, res) => {
     try {
-      const users = await User.findAll({ attributes: { exclude: ['passwordHash'] } });
+      let users = await User.findAll({ attributes: { exclude: ['passwordHash'] } });
       // set the image as an url for the user side
       users.forEach(user => {
         if(user.image)  user.image = `${req.protocol}://${req.get('host')}/uploads/${user.image}`;
       });
+      users = users.filter(user => user.is_verified === true);
       res.status(200).json(users);
     } catch (err) {
       res.status(500).json({ message: err.message });

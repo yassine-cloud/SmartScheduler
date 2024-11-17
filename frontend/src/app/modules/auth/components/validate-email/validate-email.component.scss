@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    // background-color: #f9f9f9;
+  }
+  
+  mat-card {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  mat-card-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #673ab7;
+  }
+  
+  mat-card-content {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
