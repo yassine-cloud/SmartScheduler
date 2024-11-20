@@ -19,7 +19,7 @@ export class AuthService {
   apiUrl = environment.apiUrl;
   currentUser = signal<IUser | undefined | null>(undefined);
 
-  // API 
+
   apiCheckUser = `${this.apiUrl}/user` ;
   apiRegister = `${this.apiUrl}/register` ;
   apiLogin = `${this.apiUrl}/login`;
@@ -61,7 +61,7 @@ export class AuthService {
   }
 
   register(user: FormData) {
-    // check if the FormDate implement all fields from IUser
+    
     const requiredFields = ['firstName', 'lastName', 'contact', 'email'];
     
     for (const field of requiredFields) {
@@ -86,10 +86,9 @@ export class AuthService {
 
   handleError(error: any) {
     if (error.status === 409) {
-      // Handle email conflict
+  
       return throwError('Email already exists. Please use a different email.');
     }
-    // Handle other errors
     return throwError('An error occurred. Please try again later.');
   }
 
@@ -101,5 +100,7 @@ export class AuthService {
     }
     );
   }
+
+  
 
 }

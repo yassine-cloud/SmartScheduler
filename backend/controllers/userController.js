@@ -29,7 +29,7 @@ module.exports = {
       }
   
       const token = generateToken({ userId: user.id, role: user.role });
-      // set the image as an url for the user side
+      
       if(user.image )  user.image = `${req.protocol}://${req.get('host')}/uploads/${user.image}`;
       res.status(200).json({ token , user });
     } catch (err) {
