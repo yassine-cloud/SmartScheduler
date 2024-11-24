@@ -1,6 +1,6 @@
 const userController = require('../controllers/userController');
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const { authenticateToken, roleMiddleware, privilegeOrHisOwnData } = require('../middleware/auth');
 
 router.get('/', authenticateToken, roleMiddleware('admin'), userController.getAllUsers);

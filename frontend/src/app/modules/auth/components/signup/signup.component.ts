@@ -62,18 +62,6 @@ export class SignupComponent {
     formData.append('contact', this.signupForm.get('contact')?.value);
     formData.append('image', this.selectedFile);  
 
-    this.authService.register(formData).subscribe({
-      next: (res) => {
-        if (res.token) {
-          this.snackbar.open("Signup successful", "Close", { duration: 5000 });
-          this.router.navigateByUrl("/login");
-        } else {
-          this.snackbar.open("Signup failed. Try again!", "Close", { duration: 5000, panelClass: "error-snackbar" });
-        }
-      },
-      error: (err) => {
-        this.snackbar.open("An error occurred during signup.", "Close", { duration: 5000, panelClass: "error-snackbar" });
-      }
-    });
+    this.authService.register(formData).subscribe();
   }
 }

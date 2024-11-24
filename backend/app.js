@@ -1,22 +1,27 @@
-var createError = require('http-errors');
-var express = require('express');
-var cors = require('cors')
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const cors = require('cors')
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
 // to use the env file 
 require('dotenv').config();
 
-var indexRouter = require('./routes/index');
+// sequilize
+// const sequilizeController = require('./controllers/sequelizeController');
+// sequilizeController.synchonizeSchemaDataBase();
+
+const indexRouter = require('./routes/index');
 const DB = require('./routes/sequilize_fetch');
 const upload = require('./routes/uploadRoutes');
 const authRouter = require('./routes/auth');
-var usersRouter = require('./routes/userRoutes');
+const usersRouter = require('./routes/userRoutes');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
+const verificationRouter = require('./routes/verificationRoutes');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,6 +41,22 @@ app.use('/db', DB);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
+app.use('/verify', verificationRouter);
+
+
+
+
+//////////////////- Verify the MailSender -///////////////////
+// const sendMail = require('./services/emailSender');
+// sendMail("saadaouiy51@gmail.com", "verification", "verify your email", '<p>This is a <strong>test email</strong> sent via mailersend SMTP.</p>')
+//   .then(() => {
+//     console.log('Email sent successfully!');
+//   })
+//   .catch(error => {
+//     console.log('Failed to send email.', error);
+//   });
+
+//////////////////////////////////
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

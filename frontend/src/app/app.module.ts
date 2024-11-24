@@ -12,6 +12,8 @@ import { HomeComponent } from './components/home/home.component';
 import { CapitalizePipe } from './core/pipes/capitalize.pipe';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { ResendValidationEmailComponent } from './modules/auth/components/resend-validation-email/resend-validation-email.component';
+import { ValidateEmailComponent } from './modules/auth/components/validate-email/validate-email.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     LoginComponent,
     SignupComponent,
     HomeComponent,
-    CapitalizePipe
+    CapitalizePipe,
+    ResendValidationEmailComponent,
+    ValidateEmailComponent
   ],
   imports: [
     BrowserModule,

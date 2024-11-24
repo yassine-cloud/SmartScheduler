@@ -1,0 +1,39 @@
+<div class="container">
+    <mat-card>
+      <mat-card-title *ngIf="verificationStatus === 'success'">
+        🎉 Verification Successful!
+      </mat-card-title>
+      <mat-card-title *ngIf="verificationStatus === 'failed'">
+        ❌ Verification Failed
+      </mat-card-title>
+  
+      <mat-card-content>
+        <p *ngIf="verificationStatus === 'success'">
+          Your email address has been successfully verified. You can now log in to your account.
+        </p>
+        <p *ngIf="verificationStatus === 'failed'">
+          We couldn't verify your email. This might be due to an invalid or expired link. Please try again.
+        </p>
+      </mat-card-content>
+  
+      <mat-card-actions>
+        <button 
+          mat-raised-button 
+          color="primary" 
+          *ngIf="verificationStatus === 'success'" 
+          routerLink="/login"
+        >
+          Go to Login
+        </button>
+        <!-- <button 
+          mat-raised-button 
+          color="warn" 
+          *ngIf="verificationStatus === 'failed'" 
+          routerLink="/resend-validation"
+        >
+          Resend Verification Email
+        </button> -->
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  
