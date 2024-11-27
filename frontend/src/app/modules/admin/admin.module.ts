@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './components/users/list-users/admin.component';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
@@ -17,19 +17,23 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
-
+import { PostTaskComponent } from './components/post-task/post-task.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 @NgModule({
   declarations: [
 
    AdminComponent,
-   UserFormDialogComponent
+   UserFormDialogComponent,
+   PostTaskComponent
   ],
   imports: [
-    CommonModule,
+  
+  CommonModule,
     AdminRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     MatTableModule,
     MatButtonModule,
     MatDialogModule,
@@ -41,7 +45,9 @@ import { MatCardModule } from '@angular/material/card';
     MatOptionModule,
     MatIconModule,
     MatGridListModule,
-    MatCardModule
+    MatCardModule,
+    MatDatepickerModule,
+
   ]
 })
 export class AdminModule { }

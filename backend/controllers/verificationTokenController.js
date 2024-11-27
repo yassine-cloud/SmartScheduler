@@ -38,11 +38,11 @@ async function sendVerificationEmail(to, token) {
     const text = `Please verify your email address by clicking on the following link: ${url}/verify/${token}`;
     const html = `<p>Please verify your email address by clicking on the following link:</p><p><a href="${url}/verify/${token}">Verify your email address</a></p>`;
     
-    // try {
-    //     await sendMail(to, subject, text, html);
-    // } catch (error) {
-    //     throw new Error('Error sending verification email. Please try again.');
-    // }
+    try {
+         await sendMail(to, subject, text, html);
+     } catch (error) {
+         throw new Error('Error sending verification email. Please try again.');
+    }
     
     console.log('Email sent to :', to);
     console.log('Email sent:', text);

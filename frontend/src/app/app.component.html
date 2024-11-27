@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!isEmployeeLoggedIn && !isAdminLoggedIn">
   <mat-toolbar color="primary" class="mat-elevation-z3 navbar">
     <span class="navbar-brand"> <img src="favicon.ico" alt="ICON" style="border-radius: 100%;object-fit: cover;width:2rem;" > Smart Scheduler</span>
     <span class="spacer"></span>
@@ -6,5 +6,24 @@
     <button mat-button routerLink="/login" routerLinkActive="active">Login</button>
   </mat-toolbar>
 </div>
+
+<div *ngIf="isAdminLoggedIn">
+  <mat-toolbar color="primary" class="navbar">
+  <span class="navbar-brand">Admin</span>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/admin" routerLinkActive="active">Dashboard</button>
+  <button mat-button routerLink="/admin/task" routerLinkActive="active">Post Task</button>
+  <button mat-button (click)="logout()" routerLinkActive="active">Logout</button>
+  </mat-toolbar>
+  </div>
+  
+  <div *ngIf="isEmployeeLoggedIn">
+  <mat-toolbar color="primary" class="navbar">
+  <span class="navbar-brand">Member</span>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/employee" routerLinkActive="active">Dashboard</button>
+  <button mat-button (click)="logout()" routerLinkActive="active">Logout</button>
+  </mat-toolbar>
+  </div>
 
 <router-outlet></router-outlet>
