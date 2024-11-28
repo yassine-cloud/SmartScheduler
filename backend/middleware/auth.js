@@ -39,7 +39,7 @@ const hisOwnData = (req, res, next) => {
 const privilegeOrHisOwnData = (req, res, next) => {
   // considered for data that can be changed or viewed by the owner or an admin
   const { userId } = req.params;
-  if (req.user.role === 'admin' || req.user.userId === userId) {
+  if (req.user.role === 'admin' || req.user.id === userId) {
     next();
   } else {
     return res.status(403).json({ message: 'Access denied. Insufficient permissions.' });

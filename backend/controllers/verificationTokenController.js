@@ -1,7 +1,6 @@
 const crypto = require('crypto');
 const VerificationToken = require('../models/verificationTokens');
 const User = require('../models/users');
-const { Console } = require('console');
 const sendMail = require('../services/emailSender'); 
 require('dotenv').config();
 

@@ -1,5 +1,6 @@
 const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/sequelize');
+const ProjectMembers = require('./projectMembers');
 
 class Project extends Model {
     // instance methods
@@ -11,6 +12,23 @@ class Project extends Model {
     // static methods
     static findById(id) {
         return this.findByPk(id);
+    }
+
+    // Find all projects by user ID
+    static async findAllByUserId(userId) {
+        // Find all project memberships for the given user
+        const memberships = await ProjectMembers.findAll({
+            where: { userId },
+            attributes: ['projectId'], // Only fetch the projectId column
+        });
+
+        // Extract the project IDs
+        const projectIds = memberships.map((membership) => membership.projectId);
+
+        // Return projects that match the extracted IDs
+        return this.findAll({
+            where: { id: projectIds },
+        });
     }
 }
 
@@ -40,7 +58,16 @@ Project.init({
         type: DataTypes.DATE,
         allowNull: false,
     },
-    
+    status: {
+        type: DataTypes.ENUM('Active', 'Completed', 'Cancelled'),
+        allowNull: false,
+        defaultValue: 'Active',
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
+
 }, {
     sequelize,
     modelName: 'Project',

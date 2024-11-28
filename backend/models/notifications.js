@@ -12,6 +12,11 @@ class Notification extends Model {
     static findById(id) {
         return this.findByPk(id);
     }
+
+    // find all notifications for a user
+    static findAllByUserId(userId) {
+        return this.findAll({ where: { userId } });
+    }
 }
 
 Notification.init({

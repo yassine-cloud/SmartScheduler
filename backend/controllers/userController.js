@@ -33,7 +33,7 @@ module.exports = {
         return res.status(402).json({ message: 'Your email is not verified yet.\nPlease check your email to verify it.' });
       }
   
-      const token = generateToken({ userId: user.id, role: user.role });
+      const token = generateToken({ id: user.id, role: user.role });
       
       if(user.image )  user.image = `${req.protocol}://${req.get('host')}/uploads/${user.image}`;
       res.status(200).json({ token , user });

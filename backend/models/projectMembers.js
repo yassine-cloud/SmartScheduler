@@ -12,6 +12,16 @@ class ProjectMembers extends Model {
     static findById(id) {
         return this.findByPk(id);
     }
+
+    // find by project id
+    static findByProjectId(projectId) {
+        return this.findAll({ where: { projectId } });
+    }
+
+    // find all by user id 
+    static findAllByUserId(userId) {
+        return this.findAll({ where: {userId} });
+    }
 }
 
 ProjectMembers.init({
@@ -37,7 +47,7 @@ ProjectMembers.init({
         },
     },
     role: {
-        type: DataTypes.ENUM('Project Manager', 'Developer', 'Tester/QA', 'Contributor', 'Observer'),
+        type: DataTypes.ENUM('Owner', 'Project Manager', 'Developer', 'Tester/QA', 'Contributor', 'Observer'),
         allowNull: false,
         defaultValue: 'Contributor',
     },
