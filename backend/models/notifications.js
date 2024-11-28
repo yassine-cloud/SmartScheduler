@@ -17,6 +17,16 @@ class Notification extends Model {
     static findAllByUserId(userId) {
         return this.findAll({ where: { userId } });
     }
+
+    // find all notifications for a user that are unread
+    static findAllUnreadByUserId(userId) {
+        return this.findAll({ where: { userId, isRead: false } });
+    }
+
+    // find all notifications for a user that are unread
+    static findAllReadByUserId(userId) {
+        return this.findAll({ where: { userId, isRead: true } });
+    }
 }
 
 Notification.init({

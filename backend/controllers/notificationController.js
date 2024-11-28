@@ -58,7 +58,7 @@ module.exports = {
     },
 
     // notification viewed
-    notificationViewed: async (req, res) => {
+    markNotificationReaded: async (req, res) => {
         try {
             const { notificationId } = req.params;
             const notification = await Notification.findById(notificationId);
@@ -68,6 +68,22 @@ module.exports = {
             notification.isRead = true;
             await notification.save();
             res.status(200).json({ message: 'Notification viewed.' });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
+    // notification not viewed
+    markNotificationUnreaded: async (req, res) => {
+        try {
+            const { notificationId } = req.params;
+            const notification = await Notification.findById(notificationId);
+            if (!notification) {
+                return res.status(404).json({ message: 'Notification not found.' });
+            }
+            notification.isRead = false;
+            await notification.save();
+            res.status(200).json({ message: 'Notification not viewed.' });
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
@@ -89,6 +105,54 @@ module.exports = {
             await sendMail(user.email, 'New Notification', message);
             console.log('Notification sent to user:', user.email, " ", message);
             res.status(200).json(notification);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
+    // get all user notifications that are not read
+    getUnreadNotifications: async (req, res) => {
+        try {
+            const notifications = await Notification.findAllUnreadByUserId(req.user.id);
+            res.status(200).json(notifications);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+    
+    // get all user notifications that are read
+    getReadNotifications: async (req, res) => {
+        try {
+            const notifications = await Notification.findAllReadByUserId(req.user.id);
+            res.status(200).json(notifications);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
+    // mark all notification for a user readed
+    markAllNotificationsReaded: async (req, res) => {
+        try {
+            const notifications = await Notification.findAllUnreadByUserId(req.user.id);
+            notifications.forEach(async notification => {
+                notification.isRead = true;
+                await notification.save();
+            });
+            res.status(200).json({ message: 'All notifications marked as read.' });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
+    // mark all notification for a user unreaded
+    markAllNotificationsUnreaded: async (req, res) => {
+        try {
+            const notifications = await Notification.findAllReadByUserId(req.user.id);
+            notifications.forEach(async notification => {
+                notification.isRead = false;
+                await notification.save();
+            });
+            res.status(200).json({ message: 'All notifications marked as unread.' });
         } catch (error) {
             res.status(500).json({ message: error.message });
         }

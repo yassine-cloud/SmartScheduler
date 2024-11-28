@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/sequelize'); 
 const { hashPassword } = require('../utils/crypt');
+const ProjectMembers = require('./projectMembers');
 
 class User extends Model {
   // instance methods
@@ -21,6 +22,23 @@ class User extends Model {
 
   static findById(id){
     return this.findByPk(id);
+  }
+
+  // find all users for a given Project
+  static async findAllByProjectId(projectId) {
+    // Find all project memberships for the given project
+    const memberships = await ProjectMembers.findAll({
+        where: { projectId },
+        attributes: ['userId'], // Only fetch the userId column
+    });
+
+    // Extract the user IDs
+    const userIds = memberships.map((membership) => membership.userId);
+
+    // Return users that match the extracted IDs
+    return this.findAll({
+        where: { id: userIds },
+    });
   }
 }
 

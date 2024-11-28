@@ -20,7 +20,10 @@ module.exports = {
         // get all projects by user
         getAllProjectsByUser: async (req, res) => {
             try {
-                const userId = req.user.id;
+                const userId = req.params && req.params.userId ? req.params.userId : req.user.id;
+                if (!userId) {
+                    return res.status(400).json({ message: 'User ID is required.' });
+                }
                 const projects = await Project.findAllByUserId(userId);
                 res.status(200).json(projects);
             } catch (error) {

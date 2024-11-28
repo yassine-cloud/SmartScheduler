@@ -248,9 +248,24 @@ addUser : async (req, res) => {
     catch (err) {
       res.status(500).json({ message: err.message });
     }
-  }
+  },
 
-
+  // get Users by projectId
+  getUsersByProjectId : async (req, res) => {
+    const { projectId } = req.params;
+  
+    if (!projectId) {
+      return res.status(400).json({ message: 'Project ID is required.' });
+    }
+  
+    try {
+      const users = await User.findAllByProjectId(projectId);
+      res.status(200).json(users);
+    }
+    catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  },
   
 
 
