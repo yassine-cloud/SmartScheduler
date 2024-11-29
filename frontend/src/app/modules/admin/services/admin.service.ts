@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdminService {
-  private apiUrl = 'http://localhost:3000'; // Change this to your backend API URL
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
@@ -21,4 +21,11 @@ export class AdminService {
   getUsers(): Observable<any> {
     return this.http.get(`${this.apiUrl}/users`);
   }
+  postTask(taskDTO: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/task`, { taskDTO });
+  }
+  getTask(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/task`);
+  }
+
 }

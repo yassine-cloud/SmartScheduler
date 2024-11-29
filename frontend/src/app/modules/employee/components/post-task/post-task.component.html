@@ -1,0 +1,90 @@
+<div class="container">
+    <h2>Post Task</h2>
+  
+    <form [formGroup]="taskForm" (ngSubmit)="postTask()" >
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" placeholder="Title" formControlName="title" />
+        <mat-error *ngIf="taskForm.get('title')?.hasError('required')">
+          This Input Is Required!
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Description" formControlName="description"></textarea>
+        <mat-error *ngIf="taskForm.get('description')?.hasError('required')">
+          This Input Is Required!
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Due Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="dueDatePicker"
+          placeholder="Choose a due date"
+          formControlName="dueDate"
+          [min]="minDate"
+        />
+        <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #dueDatePicker></mat-datepicker>
+        <mat-error *ngIf="taskForm.get('dueDate')?.hasError('required')">
+          This Input Is Required!
+        </mat-error>
+      </mat-form-field>
+      
+  
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Select the Priority</mat-label>
+        <mat-select formControlName="priority" name="priority">
+          <mat-option *ngFor="let priority of listOfPriorities" [value]="priority">
+            {{ priority }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="taskForm.get('priority')?.hasError('required')">
+          This Input Is Required!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Estimated Duration (in days)</mat-label>
+        <input matInput type="number" placeholder="Estimated Duration" formControlName="estimatedDuration" [min]="1" />
+        <mat-error *ngIf="taskForm.get('estimatedDuration')?.hasError('required')">
+          This Input Is Required!
+        </mat-error>
+        <mat-error *ngIf="taskForm.get('estimatedDuration')?.hasError('min')">
+          Duration must be at least 1 day!
+        </mat-error>
+      </mat-form-field>
+      
+  
+  
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Cost</mat-label>
+        <input matInput type="number" placeholder="Cost" formControlName="cost" [min]="0"/>
+        <mat-error *ngIf="taskForm.get('cost')?.hasError('required')">
+          This Input Is Required!
+        </mat-error>
+        <mat-error *ngIf="taskForm.get('cost')?.hasError('min')">
+          Cost can not be negative !
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Select the Employee</mat-label>
+        <mat-select formControlName="employeeId" name="employeeId">
+          <mat-option *ngFor="let employee of listOfEmployees" [value]="employee.id">
+            {{ employee.firstName }} &nbsp;  {{ employee.LastName}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="taskForm.get('employeeId')?.hasError('required')">
+          This Input Is Required!
+        </mat-error>
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" type="submit"  [disabled]="taskForm.invalid">
+        Post Task
+      </button>
+    </form>
+  </div>
+  
