@@ -1,0 +1,34 @@
+.image-upload-dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .file-input {
+    margin-bottom: 20px;
+  }
+  
+  .image-preview-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .image-preview {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #ddd;
+    margin-top: 10px;
+    border-radius: 8px;
+  }
+  
+  .dialog-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  

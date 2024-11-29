@@ -1,0 +1,47 @@
+.profile-card {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+  }
+  
+  .profile-title {
+    text-align: center;
+  }
+  
+  .profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .profile-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .profile-info {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .profile-info h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .profile-info p {
+    font-size: 1rem;
+    color: #555;
+  }
+  

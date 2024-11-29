@@ -83,7 +83,7 @@ module.exports = {
   
       const token = generateToken({ id: user.id, role: user.role });
       
-      if(user.image )  user.image = `${req.protocol}://${req.get('host')}/uploads/${user.image}`;
+      if(user.image )  user.image = `${req.protocol}://${req.get('host')}/${process.env.CONTAINNER}/${user.image}`;
       res.status(200).json({ token , user });
     } catch (err) {
       res.status(500).json({ message: err.message });
@@ -127,6 +127,30 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
+  },
+
+  uploadImage : async (req, res) => {
+    const { userId } = req.params;
+    const { image } = req.body;
+
+    try {
+      const user = await User.findById(userId);
+      if (!user) {
+        if(req.file?.path)  fs.unlinkSync(req.file.path);
+        return res.status(404).json({ message: 'User not found.' });
+      }
+      // delete the old image if exists
+      if(user.image)  fs.unlinkSync(`${process.env.CONTAINNER}/${user.image}`);
+      user.image = image;
+      await user.save();
+      user.image = `${req.protocol}://${req.get('host')}/${process.env.CONTAINNER}/${user.image}`;
+      res.status(200).json({ message : 'Image uploaded successfully.' , user});
+    }
+    catch (err) {
+      if(req.file?.path)  fs.unlinkSync(req.file.path);
+      res.status(500).json({ message: err.message });
+    }
+
   },
 
   getAllUsers : async (req, res) => {
@@ -189,7 +213,7 @@ addUser : async (req, res) => {
    */
   updateUser : async (req, res) => {
     const { userId } = req.params;
-    const { firstName, lastName, contact, email, password, role, status } = req.body;
+    const { firstName, lastName, contact, password, role, status } = req.body;
   
     if (!userId) {
       return res.status(400).json({ message: 'User ID is required.' });
@@ -212,8 +236,7 @@ addUser : async (req, res) => {
         user.lastName = lastName;
       if(contact)
         user.contact = contact;
-      if(email)
-        user.email = email;
+      // email is unique can't be updated
       if(password)
         user.passwordHash = password;
       // these fields can be updated by the admin only
@@ -223,6 +246,7 @@ addUser : async (req, res) => {
         user.status = status;
   
       await user.save();
+      user.image = `${req.protocol}://${req.get('host')}/${process.env.CONTAINNER}/${user.image}`;
       res.status(200).json({ message : 'User updated successfully.' , user});
     }
     catch (err) {

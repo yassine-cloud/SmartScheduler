@@ -50,7 +50,7 @@ export class AuthService {
           localStorage.setItem('token', response.token);
           this.currentUser.set(response.user);
           this.openSnackBar('Logged in successfully');
-          this.router.navigate(['/']);
+          this.router.navigate(['/user','profile']);
         }),
         catchError((error) => {
           // console.log(error.status);

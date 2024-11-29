@@ -16,6 +16,8 @@ import { ResendValidationEmailComponent } from './modules/auth/components/resend
 import { ValidateEmailComponent } from './modules/auth/components/validate-email/validate-email.component';
 import { ForgotPasswordComponent } from './modules/auth/components/forgot-password/forgot-password.component';
 import { NewPasswordComponent } from './modules/auth/components/new-password/new-password.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { NewPasswordComponent } from './modules/auth/components/new-password/new
     DemoMaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    MatCardModule,
+    MatToolbarModule,
     HttpClientModule,
   
   ],

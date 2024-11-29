@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Select a New Profile Image</h2>
+
+<mat-dialog-content class="image-upload-dialog">
+  <div class="image-preview-container">
+    <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input" />
+    <div *ngIf="selectedImageUrl">
+      <img [src]="selectedImageUrl" alt="Preview" class="image-preview" />
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-actions">
+  <button mat-button color="warn" (click)="cancel()">Cancel</button>
+  <button mat-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>
