@@ -19,6 +19,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { PostTaskComponent } from './components/post-task/post-task.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 
    AdminComponent,
    UserFormDialogComponent,
-   PostTaskComponent
+   PostTaskComponent,
+   DashboardComponent
   ],
   imports: [
   
@@ -47,6 +50,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatGridListModule,
     MatCardModule,
     MatDatepickerModule,
+    MatDividerModule
 
   ]
 })
