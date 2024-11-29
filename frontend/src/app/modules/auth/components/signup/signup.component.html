@@ -52,9 +52,12 @@
                     <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
                         <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
                     </button>
-                    <mat-error *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
-                        Please enter a valid password.
-                    </mat-error>
+                    <mat-error *ngIf="signupForm.get('password')?.hasError('required')">
+                        Password is required.
+                      </mat-error>
+                      <mat-error *ngIf="signupForm.get('password')?.hasError('passwordWeak')">
+                          Password must contain only letters and numbers with at least 8 characters.
+                        </mat-error>      
                 </mat-form-field>
 
                 

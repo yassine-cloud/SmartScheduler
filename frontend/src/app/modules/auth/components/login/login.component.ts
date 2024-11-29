@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ScrollService } from '../../../../core/services/scroll/scroll.service';
 // import { StorageService } from '../../storage/storage.service';
 
 @Component({
@@ -15,14 +16,20 @@ export class LoginComponent {
   hidePassword = true;
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private snackbar: MatSnackBar,  private router: Router
+    private readonly fb: FormBuilder,
+    private readonly authService: AuthService,
+    private readonly snackbar: MatSnackBar,  
+    private readonly router: Router,
+    private readonly scrollService: ScrollService
   ) {
     this.loginForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]]
     });
+  }
+
+  ngAfterViewInit() {
+    this.scrollService.scrollToHideNavbar();
   }
 
   togglePasswordVisibility() {

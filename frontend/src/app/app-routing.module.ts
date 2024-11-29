@@ -4,12 +4,16 @@ import { SignupComponent } from './modules/auth/components/signup/signup.compone
 import { NgModule } from '@angular/core';
 import { ValidateEmailComponent } from './modules/auth/components/validate-email/validate-email.component';
 import { ResendValidationEmailComponent } from './modules/auth/components/resend-validation-email/resend-validation-email.component';
+import { ForgotPasswordComponent } from './modules/auth/components/forgot-password/forgot-password.component';
+import { NewPasswordComponent } from './modules/auth/components/new-password/new-password.component';
 
 export const routes: Routes = [
 {path:"login",component:LoginComponent},
 {path:"signup",component:SignupComponent},
 {path : "verify/:token", component:ValidateEmailComponent},
 {path : "resend-validation/:email", component: ResendValidationEmailComponent},
+{path: "forgot-password", component: ForgotPasswordComponent},
+{path : "reset-password/:token", component: NewPasswordComponent},
 {path:"admin",loadChildren:()=>import("./modules/admin/admin.module").then(e => e.AdminModule)},
 {path:"employee",loadChildren:()=>import("./modules/employee/employee.module").then(e => e.EmployeeModule)},
 {path:"**",redirectTo:"login"}

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EmailValidationService } from '../../services/email-validation.service';
+import { ScrollService } from '../../../../core/services/scroll/scroll.service';
 
 @Component({
   selector: 'app-validate-email',
@@ -13,8 +14,13 @@ export class ValidateEmailComponent {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly emailValidationService: EmailValidationService
+    private readonly emailValidationService: EmailValidationService,
+    private readonly scrollService: ScrollService
   ) {}
+
+  ngAfterViewInit() {
+    this.scrollService.scrollToHideNavbar();
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {

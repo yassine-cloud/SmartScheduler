@@ -16,7 +16,7 @@ module.exports = {
 
         if(process.env.NODE_ENV === 'development') {
             // Synchronize the models with the database
-            await sequelize.sync({alter: true});
+            await sequelize.sync({alter: true, logging: console.log});
             console.log('All models were synchronized successfully.');
         }
         else {

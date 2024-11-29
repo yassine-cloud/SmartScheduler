@@ -22,6 +22,7 @@ const notificationsRouter = require('./routes/notificationRoutes');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 const verificationRouter = require('./routes/verificationRoutes');
+const resetPasswordRouter = require('./routes/resetPasswordRoutes');
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use('/notifications', notificationsRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/verify', verificationRouter);
+app.use('/reset-password', resetPasswordRouter);
 
 
 

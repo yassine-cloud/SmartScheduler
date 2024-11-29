@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ScrollService } from '../../../../core/services/scroll/scroll.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,15 +17,24 @@ export class SignupComponent {
   imageSrc: string | null = null;
   imageError: boolean = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService,
-              private snackbar: MatSnackBar, private router: Router) {
+  constructor(
+    private readonly fb: FormBuilder, 
+    private readonly authService: AuthService,
+    private readonly snackbar: MatSnackBar, 
+    private readonly router: Router,
+    private readonly scrollService: ScrollService
+  ) {
     this.signupForm = this.fb.group({
       firstName: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required, Validators.minLength(8)]],
+      password: [null, [Validators.required, this.passwordStrengthValidator]],
       contact: [null, [Validators.required]],  
     });
+  }
+
+  ngAfterViewInit() {
+    this.scrollService.scrollToHideNavbar();
   }
 
   togglePasswordVisibility() {
@@ -63,5 +73,20 @@ export class SignupComponent {
     formData.append('image', this.selectedFile);  
 
     this.authService.register(formData).subscribe();
+  }
+
+
+
+  // Validator for password strength
+  passwordStrengthValidator(control: FormControl): { [key: string]: boolean } | null {
+    const password = control.value;
+
+    // Regex: At least one uppercase, one lowercase, one digit, one special character
+    const passwordRegex =/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+
+    if (password && !passwordRegex.test(password)) {
+      return { passwordWeak: true };
+    }
+    return null;
   }
 }

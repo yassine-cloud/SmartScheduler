@@ -5,6 +5,19 @@ const ProjectMember = require('../models/projectMembers');
 const notificationController = require('./notificationController');
 const projectMemberController = require('./projectMemberController');
 
+
+async function findAllByUserId(userId) {
+    const memberships = await ProjectMember.findAll({
+        where: { userId },
+        attributes: ['projectId'],
+    });
+    const projectIds = memberships.map((membership) => membership.projectId);
+    return Project.findAll({
+        where: { id: projectIds },
+    });
+}
+
+
 module.exports = {
     
         // get all projects for the admin

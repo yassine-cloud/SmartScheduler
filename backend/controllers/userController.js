@@ -1,10 +1,27 @@
 const User = require('../models/users');
+const ProjectMembers = require('../models/projectMembers');
 const { generateToken } = require('../utils/jwt');
 const { comparePassword } = require('../utils/crypt');
 require('dotenv').config();
 const fs = require('fs');
 const verificationTokenController = require('./verificationTokenController');
 
+// find all users for a project
+async function findAllByProjectId(projectId) {
+  // Find all project memberships for the given project
+  const memberships = await ProjectMembers.findAll({
+      where: { projectId },
+      attributes: ['userId'], // Only fetch the userId column
+  });
+
+  // Extract the user IDs
+  const userIds = memberships.map((membership) => membership.userId);
+
+  // Return users that match the extracted IDs
+  return User.findAll({
+      where: { id: userIds },
+  });
+}
 
 module.exports = {
 
@@ -259,7 +276,7 @@ addUser : async (req, res) => {
     }
   
     try {
-      const users = await User.findAllByProjectId(projectId);
+      const users = await findAllByProjectId(projectId);
       res.status(200).json(users);
     }
     catch (err) {

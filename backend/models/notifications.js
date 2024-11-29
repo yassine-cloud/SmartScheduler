@@ -1,5 +1,7 @@
 const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/sequelize');
+const User = require('./users');
+const Project = require('./projects');
 
 class Notification extends Model {
     // instance methods
@@ -43,15 +45,15 @@ Notification.init({
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-            model: 'Project',
+            model: Project,
             key: 'id',
         },
     },
     message: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
-            model: 'User',
+            model: User,
             key: 'id',
         },
     },
