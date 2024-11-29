@@ -16,15 +16,18 @@
     <!-- Show dynamic options for authenticated users -->
     <ng-container *ngIf="currentUser()">
       <!-- Admin-specific button -->
-      <button *ngIf="isAdmin()" mat-button routerLink="/admin" routerLinkActive="active">
-        Show Users
-      </button>
-
+       <ng-container *ngIf="isAdmin()">
+      <button mat-button routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</button>
+      <button mat-button routerLink="/admin" routerLinkActive="active">User List</button>
+    </ng-container>
       <!-- User-specific button -->
-      <button *ngIf="isUser()" mat-button routerLink="/projects" routerLinkActive="active">
+    <ng-container *ngIf="isUser()">
+      <!-- <button  mat-button routerLink="/projects" routerLinkActive="active">
         Show Projects
-      </button>
-
+      </button> -->
+      <button mat-button routerLink="/employee" routerLinkActive="active">Dashboard</button>
+      <button mat-button routerLink="/employee/task" routerLinkActive="active">Post Task</button>
+    </ng-container>
       <!-- User profile menu -->
       <button
         mat-button
