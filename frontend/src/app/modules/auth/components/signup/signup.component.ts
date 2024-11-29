@@ -29,8 +29,11 @@ export class SignupComponent {
       lastName: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, this.passwordStrengthValidator]],
+      confirmPassword: ['', Validators.required],
       contact: [null, [Validators.required]],  
-    });
+    },
+    { validators: [this.passwordMatchValidator] }
+  );
   }
 
   ngAfterViewInit() {
@@ -43,7 +46,7 @@ export class SignupComponent {
 
   onFileSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
-    if (file && file.type.startsWith('image/')) {
+    if (file?.type.startsWith('image/')) {
       this.selectedFile = file;
       this.imageError = false;
 
@@ -88,5 +91,20 @@ export class SignupComponent {
       return { passwordWeak: true };
     }
     return null;
+  }
+
+  passwordMatchValidator(group: FormGroup): { [key: string]: boolean } | null {
+    const password = group.get('password');
+    const confirmPassword = group.get('confirmPassword');
+  
+    if (password && confirmPassword && password.value !== confirmPassword.value) {
+      confirmPassword.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    } else {
+      if (confirmPassword?.hasError('passwordMismatch')) {
+        confirmPassword.setErrors(null);
+      }
+      return null;
+    }
   }
 }

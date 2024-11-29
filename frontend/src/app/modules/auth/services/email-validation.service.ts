@@ -30,17 +30,7 @@ export class EmailValidationService {
           this.openSnackBar(error.error.message);
           return of(false);
         })
-      )
-      // .subscribe({
-      //   next: (response) => {
-      //     this.openSnackBar(response.message);
-      //     this.router.navigate(['/login']);
-      //   },
-      //   error: (error) => {
-      //     this.openSnackBar(error.error.message);
-          
-      //   }
-      // });
+      );
   }
 
   resendValidationEmail(email: string) {
