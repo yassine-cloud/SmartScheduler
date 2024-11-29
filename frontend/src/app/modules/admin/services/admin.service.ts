@@ -21,4 +21,7 @@ export class AdminService {
   getUsers(): Observable<any> {
     return this.http.get(`${this.apiUrl}/users`);
   }
+  postTask(taskDTO:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/admin/task`,{taskDTO});
+}
 }

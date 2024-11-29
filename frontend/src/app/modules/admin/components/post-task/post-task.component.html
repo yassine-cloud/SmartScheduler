@@ -1,7 +1,7 @@
-<div class="container m-5">
+<div class="container">
     <h2>Post Task</h2>
   
-    <form [formGroup]="taskForm" >
+    <form [formGroup]="taskForm" (ngSubmit)="postTask()" >
       <mat-form-field appearance="outline" class="form-field">
         <mat-label>Title</mat-label>
         <input matInput type="text" placeholder="Title" formControlName="title" />
@@ -25,6 +25,7 @@
           [matDatepicker]="dueDatePicker"
           placeholder="Choose a due date"
           formControlName="dueDate"
+          [min]="minDate"
         />
         <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #dueDatePicker></mat-datepicker>
@@ -32,6 +33,7 @@
           This Input Is Required!
         </mat-error>
       </mat-form-field>
+      
   
       <mat-form-field appearance="outline" class="form-field">
         <mat-label>Select the Priority</mat-label>
@@ -57,7 +59,7 @@
         </mat-error>
       </mat-form-field>
   
-      <button mat-raised-button color="primary" type="submit" [disabled]="taskForm.invalid">
+      <button mat-raised-button color="primary" type="submit"  [disabled]="taskForm.invalid">
         Post Task
       </button>
     </form>
