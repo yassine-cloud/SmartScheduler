@@ -25,16 +25,16 @@
     </mat-select>
   </mat-form-field>
 
-<!-- Task List Container (Card Layout) -->
+
 <div class="task-list">
-  <div *ngFor="let task of filteredTasks" class="task-card">
-    <!-- Task Name -->
+  <div *ngFor="let task of paginatedTasks" class="task-card">
+
     <div class="task-name">{{ task.title }}</div>
 
-    <!-- Task Description -->
+  
     <div class="task-description">{{ task.description }}</div>
 
-    <!-- Task Info -->
+    
     <div class="task-info">
       <div class="info-row">
         <span class="info-label">Due Date:</span>
@@ -54,10 +54,9 @@
       </div>
     </div>
 
-    <!-- Divider -->
+   
     <mat-divider></mat-divider>
 
-    <!-- Action Buttons -->
     <div class="actions">
       <button mat-icon-button class="view-button" (click)="onViewTask(task.id)">
         <mat-icon>visibility</mat-icon>
@@ -72,10 +71,10 @@
   </div>
 </div>
 
-<!-- Pagination Controls -->
+
 <mat-paginator
-  [length]="filteredTasks.length"
+  [length]="length"
   [pageSize]="pageSize"
+  [pageSizeOptions]="[3, 5, 10, 20]"
   (page)="onPageChange($event)"
->
-</mat-paginator>
+></mat-paginator>

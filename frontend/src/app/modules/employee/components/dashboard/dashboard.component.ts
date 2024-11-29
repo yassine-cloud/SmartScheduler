@@ -12,8 +12,9 @@ export class DashboardComponent {
   filteredTasks: any = [];
   searchQuery: string = '';
   selectedStatus: string = '';
+  paginatedTasks: any = [];
   selectedPriority: string = '';
-  pageSize: number = 5;
+  pageSize: number = 3;
   pageIndex: number = 0;
   length: number = 0;
 
@@ -34,9 +35,74 @@ export class DashboardComponent {
         employeeName: 'Jane Smith',
         priority: 'Medium',
         taskStatus: 'Pending'
+      },
+      {
+        title: 'Finish Marketing Plan',
+        description: 'Finalize the marketing plan and send it for approval.',
+        dueDate: new Date('2024-12-12'),
+        employeeName: 'John Doe',
+        priority: 'High',
+        taskStatus: 'Pending'
+      },
+      {
+        title: 'Website Redesign',
+        description: 'Redesign the homepage and add new features as discussed.',
+        dueDate: new Date('2024-12-15'),
+        employeeName: 'Jane Smith',
+        priority: 'Low',
+        taskStatus: 'In Progress'
+      },
+      {
+        title: 'Team Building Event',
+        description: 'Organize and schedule a team-building activity for the team.',
+        dueDate: new Date('2024-12-20'),
+        employeeName: 'Alice Brown',
+        priority: 'Medium',
+        taskStatus: 'Completed'
+      },
+      {
+        title: 'Client Presentation Preparation',
+        description: 'Prepare slides and materials for the upcoming client presentation.',
+        dueDate: new Date('2024-12-22'),
+        employeeName: 'John Doe',
+        priority: 'High',
+        taskStatus: 'In Progress'
+      },
+      {
+        title: 'Market Research',
+        description: 'Conduct market research and compile findings into a report.',
+        dueDate: new Date('2024-12-25'),
+        employeeName: 'Alice Brown',
+        priority: 'Medium',
+        taskStatus: 'Completed'
+      },
+      {
+        title: 'Review Financial Statements',
+        description: 'Review and analyze financial statements for the last quarter.',
+        dueDate: new Date('2024-12-28'),
+        employeeName: 'Bob Green',
+        priority: 'High',
+        taskStatus: 'Pending'
+      },
+      {
+        title: 'Annual Report Writing',
+        description: 'Write and submit the company’s annual report to the board.',
+        dueDate: new Date('2024-12-30'),
+        employeeName: 'Jane Smith',
+        priority: 'Low',
+        taskStatus: 'In Progress'
+      },
+      {
+        title: 'Launch New Marketing Campaign',
+        description: 'Coordinate and oversee the launch of the new marketing campaign.',
+        dueDate: new Date('2025-01-10'),
+        employeeName: 'Bob Green',
+        priority: 'High',
+        taskStatus: 'Pending'
       }
     ];
-    this.applyFilters(); // Apply filters on initialization
+   
+    this.applyFilters();
   }
 
   constructor(private service: EmployeeService) {
@@ -52,36 +118,33 @@ export class DashboardComponent {
   }
 
   applyFilters() {
-    this.filteredTasks = this.listOfTasks.filter((task: any) => {
-      const searchTerm = this.searchQuery.toLowerCase();
+    const searchTerm = this.searchQuery.toLowerCase();
 
-      // Filter by search query (task title or employee name)
+    this.filteredTasks = this.listOfTasks.filter((task: any) => {
       const matchesSearch =
         task.title.toLowerCase().includes(searchTerm) || task.employeeName.toLowerCase().includes(searchTerm);
-
-      // Filter by status if selected
       const matchesStatus = this.selectedStatus ? task.taskStatus === this.selectedStatus : true;
-
-      // Filter by priority if selected
       const matchesPriority = this.selectedPriority ? task.priority === this.selectedPriority : true;
-
       return matchesSearch && matchesStatus && matchesPriority;
     });
 
+    this.length = this.filteredTasks.length; 
     this.updatePagination();
   }
 
   updatePagination() {
-    this.filteredTasks = this.filteredTasks.slice(this.pageIndex * this.pageSize, (this.pageIndex + 1) * this.pageSize);
+    const startIndex = this.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedTasks = this.filteredTasks.slice(startIndex, endIndex);
   }
 
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.updatePagination();
+    this.updatePagination(); 
   }
+  
 
-  // Placeholder functions for the action buttons
   onViewTask(taskId: number) {
     console.log('Viewing task with ID:', taskId);
   }
