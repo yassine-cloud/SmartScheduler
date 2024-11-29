@@ -6,6 +6,10 @@ require('dotenv').config();
 const fs = require('fs');
 const verificationTokenController = require('./verificationTokenController');
 
+// In-memory object to store login attempts and lockout data
+const loginAttempts = {};
+const lockoutTime = 5 * 60 * 1000; // 5 minutes in milliseconds
+
 // find all users for a project
 async function findAllByProjectId(projectId) {
   // Find all project memberships for the given project
@@ -38,9 +42,36 @@ module.exports = {
         return res.status(401).json({ message: 'E-mail or Password is incorrect.' });
       }
   
+      // Check if the user is locked out
+      if (loginAttempts[email]?.lockoutTime && new Date() < new Date(loginAttempts[email].lockoutTime)) {
+        const lockoutTimeRemaining = new Date(loginAttempts[email].lockoutTime) - new Date();
+        const minutesRemaining = Math.floor(lockoutTimeRemaining / 60000); // Convert ms to minutes
+        const secondsRemaining = Math.floor((lockoutTimeRemaining % 60000) / 1000); // Convert ms to seconds
+
+        return res.status(409).json({
+          message: `Your account is locked. Please try again in ${minutesRemaining} minute(s) and ${secondsRemaining} second(s).`
+        });
+      }
+
       if (!comparePassword(password, user.passwordHash)) {
+        // Initialize the user login attempt data if not already set
+        if (!loginAttempts[email]) {
+          loginAttempts[email] = { failedAttempts: 0, lockoutTime: null };
+        }
+
+        // Increment the failed attempts
+        loginAttempts[email].failedAttempts += 1;
+
+        // Lock the account if failed attempts exceed 5
+        if (loginAttempts[email].failedAttempts >= 5) {
+          loginAttempts[email].lockoutTime = new Date(Date.now() + lockoutTime); // Lockout for 5 minutes
+          return res.status(408).json({ message: 'Too many failed attempts. Your account is locked.' });
+        }
         return res.status(401).json({ message: 'E-mail or Password is incorrect.' });
       }
+
+      // Reset failed attempts and lockout time on successful login
+      loginAttempts[email] = { failedAttempts: 0, lockoutTime: null };
   
       if(user.status === 'inactive' ) {
         return res.status(403).json({ message: 'Your account is inactive.\nYou have to contact the Admin to resolve the problem.' });

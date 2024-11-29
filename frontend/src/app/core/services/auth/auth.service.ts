@@ -68,6 +68,10 @@ export class AuthService {
             this.openSnackBar('Your account is inactive. Please contact support.');
             return throwError(() => new Error('Account inactive'));
           }
+          else if (error.status == 409 || error.status == 408) {
+            this.openSnackBar(error.error.message);
+            return throwError(() => new Error('Account locked'));
+          }
           this.openSnackBar('An error occurred. Please try again later.');
           return throwError(() => new Error('An error occurred'));
           
