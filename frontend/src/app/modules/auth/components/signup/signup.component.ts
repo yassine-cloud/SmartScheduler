@@ -82,7 +82,7 @@ export class SignupComponent {
     const password = control.value;
 
     // Regex: At least one uppercase, one lowercase, one digit, one special character
-    const passwordRegex =/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/
 
     if (password && !passwordRegex.test(password)) {
       return { passwordWeak: true };
