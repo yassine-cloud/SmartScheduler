@@ -1,6 +1,7 @@
 // the models
 const User = require('./users');
 const VerificationToken = require('./verificationTokens');
+const ResetPassword = require('./resetPassword');
 const Project = require('./projects');
 const Notification = require('./notifications');
 const projectMembers = require('./projectMembers');
@@ -11,6 +12,11 @@ const projectMembers = require('./projectMembers');
  User.hasMany(VerificationToken, {
     foreignKey: 'userId',
     as: 'verificationTokens'
+});
+
+User.hasMany(ResetPassword, {
+    foreignKey: 'userId',
+    as: 'resetPasswords'
 });
 
 User.hasMany(Notification, {
@@ -25,6 +31,12 @@ User.hasMany(projectMembers, {
 
 //verification tokens
 VerificationToken.belongsTo(User, {
+    foreignKey: 'userId',
+    as: 'user'
+});
+
+// reset password
+ResetPassword.belongsTo(User, {
     foreignKey: 'userId',
     as: 'user'
 });
