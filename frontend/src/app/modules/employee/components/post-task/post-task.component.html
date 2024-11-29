@@ -46,6 +46,29 @@
           This Input Is Required!
         </mat-error>
       </mat-form-field>
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Estimated Duration (in days)</mat-label>
+        <input matInput type="number" placeholder="Estimated Duration" formControlName="estimatedDuration" [min]="1" />
+        <mat-error *ngIf="taskForm.get('estimatedDuration')?.hasError('required')">
+          This Input Is Required!
+        </mat-error>
+        <mat-error *ngIf="taskForm.get('estimatedDuration')?.hasError('min')">
+          Duration must be at least 1 day!
+        </mat-error>
+      </mat-form-field>
+      
+  
+  
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Cost</mat-label>
+        <input matInput type="number" placeholder="Cost" formControlName="cost" [min]="0"/>
+        <mat-error *ngIf="taskForm.get('cost')?.hasError('required')">
+          This Input Is Required!
+        </mat-error>
+        <mat-error *ngIf="taskForm.get('cost')?.hasError('min')">
+          Cost can not be negative !
+        </mat-error>
+      </mat-form-field>
   
       <mat-form-field appearance="outline" class="form-field">
         <mat-label>Select the Employee</mat-label>

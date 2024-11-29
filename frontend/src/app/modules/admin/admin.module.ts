@@ -17,7 +17,6 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
-import { PostTaskComponent } from './components/post-task/post-task.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MatDividerModule } from '@angular/material/divider';
@@ -28,7 +27,6 @@ import { MatDividerModule } from '@angular/material/divider';
 
    AdminComponent,
    UserFormDialogComponent,
-   PostTaskComponent,
    DashboardComponent
   ],
   imports: [

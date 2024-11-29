@@ -1,0 +1,81 @@
+
+  <mat-form-field class="search-field" appearance="fill">
+    <mat-label>Search Task or Employee</mat-label>
+    <input matInput [(ngModel)]="searchQuery" (ngModelChange)="applyFilters()" placeholder="Search...">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field class="filter-field" appearance="fill">
+    <mat-label>Status</mat-label>
+    <mat-select [(value)]="selectedStatus" (selectionChange)="applyFilters()">
+      <mat-option value="">All</mat-option>
+      <mat-option value="In Progress">In Progress</mat-option>
+      <mat-option value="Pending">Pending</mat-option>
+      <mat-option value="Completed">Completed</mat-option>
+    </mat-select> 
+  </mat-form-field> &nbsp;
+
+  <mat-form-field class="filter-field" appearance="fill">
+    <mat-label>Priority</mat-label>
+    <mat-select [(value)]="selectedPriority" (selectionChange)="applyFilters()">
+      <mat-option value="">All</mat-option>
+      <mat-option value="High">High</mat-option>
+      <mat-option value="Medium">Medium</mat-option>
+      <mat-option value="Low">Low</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+<!-- Task List Container (Card Layout) -->
+<div class="task-list">
+  <div *ngFor="let task of filteredTasks" class="task-card">
+    <!-- Task Name -->
+    <div class="task-name">{{ task.title }}</div>
+
+    <!-- Task Description -->
+    <div class="task-description">{{ task.description }}</div>
+
+    <!-- Task Info -->
+    <div class="task-info">
+      <div class="info-row">
+        <span class="info-label">Due Date:</span>
+        <span class="info-value">{{ task.dueDate | date: 'MMM d, y' }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Employee:</span>
+        <span class="info-value">{{ task.employeeName }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Priority:</span>
+        <span class="info-value">{{ task.priority }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Status:</span>
+        <span class="info-value">{{ task.taskStatus }}</span>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <mat-divider></mat-divider>
+
+    <!-- Action Buttons -->
+    <div class="actions">
+      <button mat-icon-button class="view-button" (click)="onViewTask(task.id)">
+        <mat-icon>visibility</mat-icon>
+      </button>
+      <button mat-icon-button class="update-button" (click)="onUpdateTask(task.id)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button class="delete-button" (click)="onDeleteTask(task.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Pagination Controls -->
+<mat-paginator
+  [length]="filteredTasks.length"
+  [pageSize]="pageSize"
+  (page)="onPageChange($event)"
+>
+</mat-paginator>

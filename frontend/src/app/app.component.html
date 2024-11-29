@@ -12,7 +12,6 @@
   <span class="navbar-brand">Admin</span>
   <span class="spacer"></span>
   <button mat-button routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</button>
-  <button mat-button routerLink="/admin/task" routerLinkActive="active">Post Task</button>
   <button mat-button routerLink="/admin" routerLinkActive="active">User List</button>
   <button mat-button (click)="logout()" routerLinkActive="active">Logout</button>
   </mat-toolbar>
@@ -20,9 +19,10 @@
   
   <div *ngIf="isEmployeeLoggedIn">
   <mat-toolbar color="primary" class="navbar">
-  <span class="navbar-brand">Member</span>
+  <span class="navbar-brand">Project Manager</span>
   <span class="spacer"></span>
   <button mat-button routerLink="/employee" routerLinkActive="active">Dashboard</button>
+  <button mat-button routerLink="/employee/task" routerLinkActive="active">Post Task</button>
   <button mat-button (click)="logout()" routerLinkActive="active">Logout</button>
   </mat-toolbar>
   </div>
