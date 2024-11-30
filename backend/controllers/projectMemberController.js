@@ -4,8 +4,14 @@ const Project = require('../models/projects');
 const sendMail = require('../services/emailSender');
 
 
-module.exports = {
 
+
+
+module.exports = {
+    addProjectOwner : async (projectId, userId) => {
+        const projectMember = await ProjectMember.create({ projectId, userId, role: 'Owner' });
+        return projectMember;
+    },
 
     // get all project members
     getAllProjectMembers: async (req, res) => {

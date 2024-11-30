@@ -1,6 +1,7 @@
 const Project = require('../models/projects');
 const User = require('../models/users');
 const ProjectMember = require('../models/projectMembers');
+const sequelize = require('../config/sequelize');
 
 const notificationController = require('./notificationController');
 const projectMemberController = require('./projectMemberController');
@@ -37,7 +38,7 @@ module.exports = {
                 if (!userId) {
                     return res.status(400).json({ message: 'User ID is required.' });
                 }
-                const projects = await Project.findAllByUserId(userId);
+                const projects = await findAllByUserId(userId);
                 res.status(200).json(projects);
             } catch (error) {
                 res.status(500).json({ message: error.message });
@@ -67,7 +68,7 @@ module.exports = {
                 }
                 const userId = req.body && req.body.userId ? req.body.userId : req.user.id;
                 const project = await Project.create({ name, description, budget, startDate, endDate });
-                await projectMemberController.addProjectMember({ userId, projectId: project.id, role: 'Owner' });
+                await projectMemberController.addProjectOwner(project.id, userId);
                 res.status(200).json(project);
             } catch (error) {
                 res.status(500).json({ message: error.message });
@@ -109,20 +110,27 @@ module.exports = {
     
         // delete project
         deleteProject: async (req, res) => {
+            const transaction = await sequelize.transaction();
             try {
                 const { projectId } = req.params;
-                const project = await Project.findById(projectId);
+                const project = await Project.findById(projectId, { transaction });
                 if (!project) {
                     return res.status(404).json({ message: 'Project not found.' });
                 }
                 const userId = req.user.id;
-                const projectMember = await ProjectMember.findOne({ where: { userId, projectId } });
+                const projectMember = await ProjectMember.findOne({ where: { userId, projectId }, transaction });
                 if (!projectMember || projectMember.role !== 'Owner') {
                     return res.status(403).json({ message: 'You are not authorized to delete this project.' });
                 }
-                await project.destroy();
+                await ProjectMember.destroy({ where: { projectId }, transaction });
+                // await notificationController.deleteNotificationsByProjectId(projectId);
+
+                await project.destroy({ transaction });
+
+                await transaction.commit();
                 res.status(200).json({ message: 'Project deleted successfully.' });
             } catch (error) {
+                await transaction.rollback();
                 res.status(500).json({ message: error.message });
             }
         },

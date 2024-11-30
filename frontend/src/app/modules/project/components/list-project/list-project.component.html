@@ -1,0 +1,67 @@
+<mat-form-field class="search-field" appearance="fill">
+    <mat-label>Search Project</mat-label>
+    <input matInput [(ngModel)]="searchQuery" (ngModelChange)="applyFilters()" placeholder="Search...">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  
+  <mat-form-field class="filter-field" appearance="fill">
+    <mat-label>Status</mat-label>
+    <mat-select [(value)]="selectedStatus" (selectionChange)="applyFilters()">
+      <mat-option value="">All</mat-option>
+      <mat-option *ngFor="let status of ['Active', 'Completed', 'Cancelled']" [value]="status">
+        {{ status }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="onAddProject()">
+    <mat-icon>add</mat-icon> Add Project
+  </button>
+  
+  <div class="task-list">
+    <div *ngFor="let project of paginatedProjects" class="task-card">
+      <div class="task-name">{{ project.name }}</div>
+      <div class="task-description">{{ project.description }}</div>
+  
+      <div class="task-info">
+        <div class="info-row">
+          <span class="info-label">Status:</span>
+          <span class="info-value">{{ project.status }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Budget:</span>
+          <span class="info-value">{{ project.budget | currency }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Start Date:</span>
+          <span class="info-value">{{ project.startDate | date: 'MMM d, y' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">End Date:</span>
+          <span class="info-value">{{ project.endDate | date: 'MMM d, y' }}</span>
+        </div>
+      </div>
+  
+      <mat-divider></mat-divider>
+  
+      <div class="actions">
+        <button mat-icon-button class="view-button" *ngIf="project.id" (click)="onViewProject(project.id)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button mat-icon-button class="update-button" *ngIf="project.id" (click)="onUpdateProject(project.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button class="delete-button" *ngIf="project.id" (click)="confirmDelete(project.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <mat-paginator
+    [length]="length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[3, 5, 10, 20]"
+    (page)="onPageChange($event)"
+  ></mat-paginator>
+  

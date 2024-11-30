@@ -16,6 +16,7 @@ export const routes: Routes = [
 {path : "reset-password/:token", component: NewPasswordComponent},
 {path:"admin",loadChildren:()=>import("./modules/admin/admin.module").then(e => e.AdminModule)},
 {path:"employee",loadChildren:()=>import("./modules/employee/employee.module").then(e => e.EmployeeModule)},
+{path:"project",loadChildren:()=>import("./modules/project/project.module").then(e => e.ProjectModule)},
 {path:"user",loadChildren:()=>import("./modules/user/user.module").then(e => e.UserModule)},
 {path:"**",redirectTo:"login"}
 

@@ -45,12 +45,14 @@ ResetPassword.belongsTo(User, {
 // projects
 Project.hasMany(Notification, {
     foreignKey: 'projectId',
-    as: 'notifications'
+    as: 'notifications',
+    onDelete: 'CASCADE'
 });
 
 Project.hasMany(projectMembers, {
     foreignKey: 'projectId',
-    as: 'projectMembers'
+    as: 'projectMembers',
+    onDelete: 'CASCADE'
 });
 
 // notifications
