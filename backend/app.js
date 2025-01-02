@@ -8,16 +8,16 @@ const logger = require('morgan');
 // to use the env file 
 require('dotenv').config();
 
-// sequilize
-// const sequilizeController = require('./controllers/sequelizeController');
-// sequilizeController.synchonizeSchemaDataBase();
-
 const indexRouter = require('./routes/index');
 const DB = require('./routes/sequilize_fetch');
 const upload = require('./routes/uploadRoutes');
 const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/userRoutes');
 const projectsRouter = require('./routes/projectRoutes');
+const taskRouter = require('./routes/taskRoutes');
+const subTaskRouter = require('./routes/subTaskRoutes');
+const resourceRouter = require('./routes/resourceRoutes');
+const taskResourceRouter = require('./routes/taskResourceRoutes');
 const notificationsRouter = require('./routes/notificationRoutes');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
@@ -43,6 +43,10 @@ app.use('/uploads', upload);
 app.use('/db', DB);
 app.use('/users', usersRouter);
 app.use('/projects', projectsRouter);
+app.use('/tasks', taskRouter);
+app.use('/sub-tasks', subTaskRouter);
+app.use('/resources', resourceRouter);
+app.use('/task-resources', taskResourceRouter);
 app.use('/notifications', notificationsRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
