@@ -1,5 +1,6 @@
 const Task = require('../models/tasks');
 const TaskDependency = require('../models/taskDependencies');
+const TaskResource = require('../models/taskResources');
 const sequelize = require('../config/sequelize');
 const SubTask = require('../models/subTasks');
 
@@ -150,6 +151,8 @@ module.exports = {
             if (projectId && userId) {
                 let tasks = await Task.findAll({ where: { projectId: projectId, userId: userId } });
                 tasks = tasks.map(task => {
+                    task.dependentTasksId = TaskDependency.findByTaskId(task.id).then((dependentTasks) => dependentTasks.map(e => e.dependentTaskId));
+                    task.resourcesId = TaskResource.findByTaskId(task.id).then((resources) => resources.map(e => e.resourceId));
                     task.nbSubtasks = SubTask.countByTaskId(task.id);
                     return task;
                 });
@@ -158,6 +161,8 @@ module.exports = {
             else if (projectId) {
                 let tasks = await Task.findByProjectId(projectId);
                 tasks = tasks.map(task => {
+                    task.dependentTasksId = TaskDependency.findByTaskId(task.id).then((dependentTasks) => dependentTasks.map(e => e.dependentTaskId));
+                    task.resourcesId = TaskResource.findByTaskId(task.id).then((resources) => resources.map(e => e.resourceId));
                     task.nbSubtasks = SubTask.countByTaskId(task.id);
                     return task;
                 });
@@ -166,6 +171,8 @@ module.exports = {
             else if (userId) {
                 let tasks = await Task.findByUserId(userId);
                 tasks = tasks.map(task => {
+                    task.dependentTasksId = TaskDependency.findByTaskId(task.id).then((dependentTasks) => dependentTasks.map(e => e.dependentTaskId));
+                    task.resourcesId = TaskResource.findByTaskId(task.id).then((resources) => resources.map(e => e.resourceId));
                     task.nbSubtasks = SubTask.countByTaskId(task.id);
                     return task;
                 });
@@ -186,6 +193,8 @@ module.exports = {
             if (!task) {
                 return res.status(404).json({ error: 'Task not found' });
             }
+            task.dependentTasksId = TaskDependency.findByTaskId(task.id).then((dependentTasks) => dependentTasks.map(e => e.dependentTaskId));
+            task.resourcesId = TaskResource.findByTaskId(task.id).then((resources) => resources.map(e => e.resourceId));
             task.nbSubtasks = SubTask.countByTaskId(task.id);
             return res.status(200).json(task);
         } catch (error) {

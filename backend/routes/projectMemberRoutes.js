@@ -6,4 +6,8 @@ const { authenticateToken, roleMiddleware, privilegeOrHisOwnData } = require('..
 // this a route between the users and projects 
 // does not need routes
 
-// module.exports = router;
+router.post('/', authenticateToken, projectMemberController.addProjectMember);
+router.put('/:projectMemberId', authenticateToken, projectMemberController.updateProjectMember);
+router.delete('/:projectMemberId', authenticateToken, projectMemberController.deleteProjectMember);
+
+module.exports = router;
