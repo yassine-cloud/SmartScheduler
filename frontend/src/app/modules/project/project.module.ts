@@ -21,6 +21,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { AddProjectComponent } from './components/add-project/add-project.component';
 import { EditProjectComponent } from './components/edit-project/edit-project.component';
 import { DeleteProjectConfirmationComponent } from './components/delete-project-confirmation/delete-project-confirmation.component';
+import { ShowProjectComponent } from './components/show-project/show-project.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MemberCardComponent } from './components/member-card/member-card.component';
+import { TaskBoardComponent } from './components/task-board/task-board.component';
+import { ResourceListComponent } from './components/resource-list/resource-list.component';
 
 
 @NgModule({
@@ -28,7 +33,11 @@ import { DeleteProjectConfirmationComponent } from './components/delete-project-
     ListProjectComponent,
     AddProjectComponent,
     EditProjectComponent,
-    DeleteProjectConfirmationComponent    
+    DeleteProjectConfirmationComponent,
+    ShowProjectComponent,
+    MemberCardComponent,
+    TaskBoardComponent,
+    ResourceListComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +58,8 @@ import { DeleteProjectConfirmationComponent } from './components/delete-project-
     MatCardModule,
     MatDatepickerModule,
     MatDividerModule,
-    MatPaginator
+    MatPaginator,
+    MatExpansionModule
   ]
 })
 export class ProjectModule { }

@@ -1,0 +1,16 @@
+<div class="task-board">
+    <div class="task-column" *ngFor="let column of taskColumns">
+      <h3>{{ column.title }}</h3>
+      <div class="task-card" *ngFor="let task of tasks ">
+        <div
+            class="task"
+            [ngStyle]="{ 'background-color': getTaskPriorityColor(task) }"
+            (click)="onTaskClick(task)"
+            (keydown)="onTaskKeyDown($event, task)"
+            >
+            {{ task.name }}
+            </div>
+      </div>
+    </div>
+  </div>
+  

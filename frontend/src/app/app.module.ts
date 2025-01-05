@@ -18,6 +18,9 @@ import { ForgotPasswordComponent } from './modules/auth/components/forgot-passwo
 import { NewPasswordComponent } from './modules/auth/components/new-password/new-password.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { TaskFilterPipe } from './core/pipes/task-filter.pipe';
+import { ProjectInviteComponent } from './modules/project-member/components/project-invite/project-invite.component';
+import { EditProjectMemberComponent } from './modules/project-member/components/edit-project-member/edit-project-member.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     ResendValidationEmailComponent,
     ValidateEmailComponent,
     ForgotPasswordComponent,
-    NewPasswordComponent
+    NewPasswordComponent,
+    TaskFilterPipe,
+    ProjectInviteComponent,
+    EditProjectMemberComponent
   ],
   imports: [
     BrowserModule,

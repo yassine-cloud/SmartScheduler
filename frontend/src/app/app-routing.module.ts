@@ -18,6 +18,7 @@ export const routes: Routes = [
 {path:"employee",loadChildren:()=>import("./modules/employee/employee.module").then(e => e.EmployeeModule)},
 {path:"project",loadChildren:()=>import("./modules/project/project.module").then(e => e.ProjectModule)},
 {path:"user",loadChildren:()=>import("./modules/user/user.module").then(e => e.UserModule)},
+{path:"invite",loadChildren:()=>import("./modules/project-member/project-member.module").then(e => e.ProjectMemberModule)},
 {path:"**",redirectTo:"login"}
 
 ];

@@ -1,0 +1,9 @@
+<mat-card>
+    <img mat-card-image [src]="member?.image" alt="Member" />
+    <mat-card-content>
+      <h2>{{ member?.firstName }} {{ member?.lastName }} </h2>
+      <p [ngStyle]="{'color': color}">{{ role }}</p>
+      <button *ngIf="canEdit" mat-button color="primary" (click)="openEditUserDialog()">Edit</button>
+    </mat-card-content>
+  </mat-card>
+  

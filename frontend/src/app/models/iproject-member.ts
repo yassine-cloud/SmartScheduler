@@ -1,10 +1,13 @@
+import { IProject } from "./iproject";
+import { IUser } from "./iuser";
+
 export enum ProjectMemberRole {
-    'Owner', 
-    'Project Manager', 
-    'Developer', 
-    'Tester/QA', 
-    'Contributor', 
-    'Observer'
+    Owner = 'Owner',
+    ProjectManager = 'Project Manager',
+    Developer = 'Developer',
+    TesterQA = 'Tester/QA',
+    Contributor = 'Contributor',
+    Observer = 'Observer'
 }
 
 export interface IProjectMember {
@@ -12,4 +15,7 @@ export interface IProjectMember {
     projectId : string;
     userId : string;
     role : ProjectMemberRole;
+    
+    user ?: IUser;
+    project ?: IProject;
 }
