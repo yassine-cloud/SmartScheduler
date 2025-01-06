@@ -12,21 +12,21 @@ class TaskDependency extends Model {
         return this.findAll({ where: { dependentTaskId } });
     }
     static async calculateTaskPriority(taskId) {
-        const nbDependentTasks = await this.findByTaskId(taskId).length; // Number of tasks that the task depends on
-        const nbDependentOnTasks = await this.findByDependentTaskId(taskId).length; // Number of tasks that depend on the task
-        if(nbDependentTasks == 0 && nbDependentOnTasks == 0 || nbDependentTasks > 0 && nbDependentOnTasks == 0) {
-            return 3;
-        }
-        else if(nbDependentTasks == 0 && nbDependentOnTasks > 0) {
-            return 1;
-        }
-        else if(nbDependentTasks > 0 && nbDependentOnTasks > 0) {
-            return 2;
-        }
-        else {
-            return 3;
+        // Await the result of the queries before accessing the length
+        const nbDependentTasks = (await this.findByTaskId(taskId)).length; // Number of tasks that the task depends on
+        const nbDependentOnTasks = (await this.findByDependentTaskId(taskId)).length; // Number of tasks that depend on the task
+    
+        if ((nbDependentTasks === 0 && nbDependentOnTasks === 0) || (nbDependentTasks > 0 && nbDependentOnTasks === 0)) {
+            return 3; // Low priority
+        } else if (nbDependentTasks === 0 && nbDependentOnTasks > 0) {
+            return 1; // High priority
+        } else if (nbDependentTasks > 0 && nbDependentOnTasks > 0) {
+            return 2; // Medium priority
+        } else {
+            return 3; // Default to low priority
         }
     }
+    
 }
 
 TaskDependency.init({

@@ -1,15 +1,18 @@
 <div class="task-board">
     <div class="task-column" *ngFor="let column of taskColumns">
       <h3>{{ column.title }}</h3>
-      <div class="task-card" *ngFor="let task of tasks ">
+      <div class="task-card" *ngFor="let task of sortTasksByPriority(tasksByStatus(column.status)) ">
         <div
             class="task"
             [ngStyle]="{ 'background-color': getTaskPriorityColor(task) }"
-            (click)="onTaskClick(task)"
-            (keydown)="onTaskKeyDown($event, task)"
+            (dbclick)="onTaskClick(task)"
             >
             {{ task.name }}
-            </div>
+            <div class="task-actions">
+            <i class="material-icons" (click)="onTaskClick(task)">edit</i>
+            <i class="material-icons" (click)="onDeleteTask(task)">delete</i>
+          </div>
+          </div>
       </div>
     </div>
   </div>

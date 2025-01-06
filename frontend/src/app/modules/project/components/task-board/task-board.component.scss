@@ -6,16 +6,21 @@
   
   .task-column {
     flex: 1;
-    background: #f9f9f9;
+    background: #3b2d38;
     padding: 16px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .task-column:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
   .task-column h3 {
     text-align: center;
     margin-bottom: 12px;
-    color: #333;
+    color: #1976d2;
   }
   
   .task-card {
@@ -41,3 +46,8 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
+  .task-actions {
+    display: flex;
+    gap: 8px; /* Add some spacing between the icons */
+    justify-content: flex-end;
+}

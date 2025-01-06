@@ -4,6 +4,7 @@ import { ActiveProjectService } from '../../services/active-project.service';
 import { ProjectMemberRole } from '../../../../models/iproject-member';
 import { MatDialog } from '@angular/material/dialog';
 import { ProjectInviteComponent } from '../../../project-member/components/project-invite/project-invite.component';
+import { AddTaskDialogComponent } from '../../../task/components/add-task-dialog/add-task-dialog.component';
 
 @Component({
   selector: 'app-show-project',
@@ -30,7 +31,20 @@ export class ShowProjectComponent {
 
   // Placeholder for adding a task
   addTask() {
-    alert('Add Task functionality coming soon!');
+    const dialogRef = this.dialog.open(AddTaskDialogComponent, {
+      width: '600px',
+      data: {
+        availableTasks: this.ActiveProjectService.tasks(),
+        availableResources: this.ActiveProjectService.resources(),
+        project: this.ActiveProjectService.activeProject(),
+      },
+    });
+  
+    dialogRef.afterClosed().subscribe((newTask) => {
+      if (newTask) {
+        this.ActiveProjectService.addTask(newTask);
+      }
+    });
   }
 
   // Placeholder for adding a resource

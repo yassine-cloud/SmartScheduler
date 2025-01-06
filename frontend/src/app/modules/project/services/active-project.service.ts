@@ -138,6 +138,42 @@ export class ActiveProjectService {
     });
   }
 
+  addTask(task: ITask) {
+    this.taskService.addTask(task).subscribe({
+      next: () => {
+        this._snackBar.open('Task added successfully!', '', { duration: 1500 });
+        this.refreshTasks();
+      },
+      error: (err) => {
+        console.error('Error adding task:', err);
+      },
+    });
+  }
+
+  updateTask(task: ITask) {
+    this.taskService.updateTask(task).subscribe({
+      next: () => {
+        this._snackBar.open('Task updated successfully!', '', { duration: 1500 });
+        this.refreshTasks();
+      },
+      error: (err) => {
+        console.error('Error updating task:', err);
+      },
+    });
+  }
+
+  deleteTask(taskId: string) {
+    this.taskService.deleteTask(taskId).subscribe({
+      next: () => {
+        this._snackBar.open('Task deleted successfully!', '', { duration: 1500 });
+        this.refreshTasks();
+      },
+      error: (err) => {
+        console.error('Error deleting task:', err);
+      },
+    });
+  }
+
   refreshTasks() {
     this.taskService.getAllTasksforProject(this.activeProject()?.id!).subscribe({
       next: (tasks) => {

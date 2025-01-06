@@ -21,6 +21,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TaskFilterPipe } from './core/pipes/task-filter.pipe';
 import { ProjectInviteComponent } from './modules/project-member/components/project-invite/project-invite.component';
 import { EditProjectMemberComponent } from './modules/project-member/components/edit-project-member/edit-project-member.component';
+import { AddTaskDialogComponent } from './modules/task/components/add-task-dialog/add-task-dialog.component';
+import { ResourcesDialogComponent } from './modules/task/components/resources-dialog/resources-dialog.component';
+import { DependentTasksDialogComponent } from './modules/task/components/dependent-tasks-dialog/dependent-tasks-dialog.component';
+import { EditTaskDialogComponent } from './modules/task/components/edit-task-dialog/edit-task-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,11 @@ import { EditProjectMemberComponent } from './modules/project-member/components/
     NewPasswordComponent,
     TaskFilterPipe,
     ProjectInviteComponent,
-    EditProjectMemberComponent
+    EditProjectMemberComponent,
+    AddTaskDialogComponent,
+    DependentTasksDialogComponent,
+    ResourcesDialogComponent,
+    EditTaskDialogComponent
   ],
   imports: [
     BrowserModule,
