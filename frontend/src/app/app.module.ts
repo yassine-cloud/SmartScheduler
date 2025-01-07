@@ -25,6 +25,12 @@ import { AddTaskDialogComponent } from './modules/task/components/add-task-dialo
 import { ResourcesDialogComponent } from './modules/task/components/resources-dialog/resources-dialog.component';
 import { DependentTasksDialogComponent } from './modules/task/components/dependent-tasks-dialog/dependent-tasks-dialog.component';
 import { EditTaskDialogComponent } from './modules/task/components/edit-task-dialog/edit-task-dialog.component';
+import { TaskDetailsComponent } from './modules/task/components/task-details/task-details.component';
+import { AddSubTaskDialogComponent } from './modules/sub-task/components/add-sub-task-dialog/add-sub-task-dialog.component';
+import { EditSubTaskDialogComponent } from './modules/sub-task/components/edit-sub-task-dialog/edit-sub-task-dialog.component';
+import { DetailsSubTaskDialogComponent } from './modules/sub-task/components/details-sub-task-dialog/details-sub-task-dialog.component';
+import { EditResourceDialogComponent } from './modules/resource/components/edit-resource-dialog/edit-resource-dialog.component';
+import { AddResourceDialogComponent } from './modules/resource/components/add-resource-dialog/add-resource-dialog.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +49,13 @@ import { EditTaskDialogComponent } from './modules/task/components/edit-task-dia
     AddTaskDialogComponent,
     DependentTasksDialogComponent,
     ResourcesDialogComponent,
-    EditTaskDialogComponent
+    EditTaskDialogComponent,
+    TaskDetailsComponent,
+    AddSubTaskDialogComponent,
+    EditSubTaskDialogComponent,
+    DetailsSubTaskDialogComponent,
+    AddResourceDialogComponent,
+    EditResourceDialogComponent
   ],
   imports: [
     BrowserModule,

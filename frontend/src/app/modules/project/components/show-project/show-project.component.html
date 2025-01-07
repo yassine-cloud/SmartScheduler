@@ -73,7 +73,7 @@
           <small style="margin-left: 4px;">( {{ ActiveProjectService.tasks().length }} task(s) )</small>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-task-board [tasks]="ActiveProjectService.tasks()"></app-task-board>
+      <app-task-board [tasks]="ActiveProjectService.tasks()" [canEdit]="lowerAccess()" ></app-task-board>
     </mat-expansion-panel>
   </ng-container>
   <button *ngIf="lowerAccess()" class="add-btn" mat-raised-button color="primary" (click)="addTask()">

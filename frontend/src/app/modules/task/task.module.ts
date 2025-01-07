@@ -5,7 +5,8 @@ import { TaskRoutingModule } from './task-routing.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     TaskRoutingModule

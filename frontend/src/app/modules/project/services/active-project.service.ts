@@ -187,6 +187,42 @@ export class ActiveProjectService {
     });
   }
 
+  addResource(resource: IResource) {
+    this.resourceService.addResource(resource).subscribe({
+      next: () => {
+        this._snackBar.open('Resource added successfully!', '', { duration: 1500 });
+        this.refreshResources();
+      },
+      error: (err) => {
+        console.error('Error adding resource:', err);
+      },
+    });
+  }
+
+  updateResource(resource: IResource) {
+    this.resourceService.updateResource(resource).subscribe({
+      next: () => {
+        this._snackBar.open('Resource updated successfully!', '', { duration: 1500 });
+        this.refreshResources();
+      },
+      error: (err) => {
+        console.error('Error updating resource:', err);
+      },
+    });
+  }
+
+  deleteResource(resourceId: string) {
+    this.resourceService.deleteResource(resourceId).subscribe({
+      next: () => {
+        this._snackBar.open('Resource deleted successfully!', '', { duration: 1500 });
+        this.refreshResources();
+      },
+      error: (err) => {
+        console.error('Error deleting resource:', err);
+      },
+    });
+  }
+
   refreshResources() {
     this.resourceService.getAllResourcesforProject(this.activeProject()?.id!).subscribe({
       next: (resources) => {

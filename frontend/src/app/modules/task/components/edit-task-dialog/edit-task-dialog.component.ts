@@ -6,7 +6,6 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DependentTasksDialogComponent } from '../dependent-tasks-dialog/dependent-tasks-dialog.component';
 import { ResourcesDialogComponent } from '../resources-dialog/resources-dialog.component';
-import { IUser } from '../../../../models/iuser';
 import { IProjectMember, ProjectMemberRole } from '../../../../models/iproject-member';
 
 @Component({

@@ -5,7 +5,8 @@ import { ResourceRoutingModule } from './resource-routing.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     ResourceRoutingModule

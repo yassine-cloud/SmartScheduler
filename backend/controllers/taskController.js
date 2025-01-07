@@ -248,10 +248,25 @@ module.exports = {
         try {
             const { id } = req.params;
             const { dependentTasksId } = req.body;
+
+            const oldTask = await Task.findByPk(id);
+            if (!oldTask) {
+                return res.status(404).json({ error: 'Task not found' });
+            }
+
             const [updated] = await Task.update(req.body, {
                 where: { id: id }
             });
             if (updated) {
+                // Check if status changes to "done" and update sub-tasks
+            if (req.body.status && req.body.status === 'done' && oldTask.status !== 'done') {
+                const subTasks = await SubTask.findAll({ where: { taskId: id } }); // Fetch sub-tasks
+                const subTaskIds = subTasks.map((subTask) => subTask.id); // Extract IDs
+                
+                if (subTaskIds.length > 0) {
+                    await SubTask.update({ status: 'done' }, { where: { id: subTaskIds } });
+                }
+            }
                 const updatedTask = await Task.findByPk(id);
                 if(dependentTasksId)
                     await updateTaskDependency(id, dependentTasksId);
@@ -261,6 +276,7 @@ module.exports = {
             }
             throw new Error('Task not found');
         } catch (error) {
+            console.log(error)
             return res.status(500).json({ error: error.message });
         }
     },
@@ -269,6 +285,7 @@ module.exports = {
         try {
             const { id } = req.params;
             await deleteTaskDependency(id);
+            await SubTask.destroy({ where: { taskId: id } });
             const deleted = await Task.destroy({
                 where: { id: id }
             });

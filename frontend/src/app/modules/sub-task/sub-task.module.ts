@@ -5,7 +5,8 @@ import { SubTaskRoutingModule } from './sub-task-routing.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     SubTaskRoutingModule

@@ -3,6 +3,7 @@ import { ITask, TaskPriority, TaskStatus } from '../../../../models/itask';
 import { EditTaskDialogComponent } from '../../../task/components/edit-task-dialog/edit-task-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ActiveProjectService } from '../../services/active-project.service';
+import { TaskDetailsComponent } from '../../../task/components/task-details/task-details.component';
 
 @Component({
   selector: 'app-task-board',
@@ -11,6 +12,7 @@ import { ActiveProjectService } from '../../services/active-project.service';
 })
 export class TaskBoardComponent {
   @Input() tasks: ITask[] = [];
+  @Input() canEdit : boolean = false;
 
   constructor(
     private readonly dialog: MatDialog, 
@@ -40,6 +42,24 @@ export class TaskBoardComponent {
 
   onTaskClick(task: ITask) {
     console.log('Task clicked:', task);
+    const dialog = this.dialog.open(TaskDetailsComponent, {
+      width: '600px',
+      data: {
+        taskId: task.id,
+        canEdit : this.canEdit,
+      }
+    });
+  
+    dialog.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Task updated:', result);
+      }
+    });
+  }
+
+  onTaskEdit(event : MouseEvent ,task: ITask) {
+    event.stopPropagation();
+    console.log('Task clicked:', task);
     const dialog = this.dialog.open(EditTaskDialogComponent, {
       width: '800px',
       data: {
@@ -61,7 +81,8 @@ export class TaskBoardComponent {
     });
   }
 
-  onDeleteTask(task: ITask) {
+  onDeleteTask(event : MouseEvent, task: ITask) {
+    event.stopPropagation();
     if (confirm('Are you sure you want to delete this task? ' + task.name)) {
       this.ActiveProjectService.deleteTask(task.id!);
     }

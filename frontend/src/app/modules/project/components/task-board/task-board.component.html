@@ -5,12 +5,12 @@
         <div
             class="task"
             [ngStyle]="{ 'background-color': getTaskPriorityColor(task) }"
-            (dbclick)="onTaskClick(task)"
+            (click)="onTaskClick(task)"
             >
             {{ task.name }}
-            <div class="task-actions">
-            <i class="material-icons" (click)="onTaskClick(task)">edit</i>
-            <i class="material-icons" (click)="onDeleteTask(task)">delete</i>
+            <div class="task-actions" *ngIf="canEdit">
+            <i class="material-icons" (click)="onTaskEdit($event,task)">edit</i>
+            <i class="material-icons" (click)="onDeleteTask($event,task)">delete</i>
           </div>
           </div>
       </div>
