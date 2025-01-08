@@ -31,6 +31,7 @@ import { EditSubTaskDialogComponent } from './modules/sub-task/components/edit-s
 import { DetailsSubTaskDialogComponent } from './modules/sub-task/components/details-sub-task-dialog/details-sub-task-dialog.component';
 import { EditResourceDialogComponent } from './modules/resource/components/edit-resource-dialog/edit-resource-dialog.component';
 import { AddResourceDialogComponent } from './modules/resource/components/add-resource-dialog/add-resource-dialog.component';
+import { NumberFormatterPipe } from './core/pipes/number-formatter.pipe';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { AddResourceDialogComponent } from './modules/resource/components/add-re
     EditSubTaskDialogComponent,
     DetailsSubTaskDialogComponent,
     AddResourceDialogComponent,
-    EditResourceDialogComponent
+    EditResourceDialogComponent,
+    NumberFormatterPipe
   ],
   imports: [
     BrowserModule,

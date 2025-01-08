@@ -26,6 +26,7 @@ const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 const verificationRouter = require('./routes/verificationRoutes');
 const resetPasswordRouter = require('./routes/resetPasswordRoutes');
+const staticsRouter = require('./routes/staticsRoutes');
 
 const app = express();
 
@@ -57,6 +58,7 @@ app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/verify', verificationRouter);
 app.use('/reset-password', resetPasswordRouter);
+app.use('/statics', staticsRouter);
 
 
 

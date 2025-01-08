@@ -6,8 +6,10 @@ import { ValidateEmailComponent } from './modules/auth/components/validate-email
 import { ResendValidationEmailComponent } from './modules/auth/components/resend-validation-email/resend-validation-email.component';
 import { ForgotPasswordComponent } from './modules/auth/components/forgot-password/forgot-password.component';
 import { NewPasswordComponent } from './modules/auth/components/new-password/new-password.component';
+import { HomeComponent } from './components/home/home.component';
 
 export const routes: Routes = [
+{path : "", component: HomeComponent },
 {path:"login",component:LoginComponent},
 {path:"signup",component:SignupComponent},
 {path : "verify/:token", component:ValidateEmailComponent},
@@ -19,7 +21,7 @@ export const routes: Routes = [
 {path:"project",loadChildren:()=>import("./modules/project/project.module").then(e => e.ProjectModule)},
 {path:"user",loadChildren:()=>import("./modules/user/user.module").then(e => e.UserModule)},
 {path:"invite",loadChildren:()=>import("./modules/project-member/project-member.module").then(e => e.ProjectMemberModule)},
-{path:"**",redirectTo:"login"}
+{path:"**",redirectTo:""}
 
 ];
 
