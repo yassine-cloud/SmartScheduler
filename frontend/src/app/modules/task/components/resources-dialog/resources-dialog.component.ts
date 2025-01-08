@@ -13,6 +13,7 @@ export class ResourcesDialogComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.availableResources = this.data.availableResources;
+    this.selectedResources = this.data.selectedResources;
   }
 
 }

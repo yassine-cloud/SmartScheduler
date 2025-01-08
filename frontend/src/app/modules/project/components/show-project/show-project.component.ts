@@ -5,6 +5,7 @@ import { ProjectMemberRole } from '../../../../models/iproject-member';
 import { MatDialog } from '@angular/material/dialog';
 import { ProjectInviteComponent } from '../../../project-member/components/project-invite/project-invite.component';
 import { AddTaskDialogComponent } from '../../../task/components/add-task-dialog/add-task-dialog.component';
+import { AddResourceDialogComponent } from '../../../resource/components/add-resource-dialog/add-resource-dialog.component';
 
 @Component({
   selector: 'app-show-project',
@@ -49,7 +50,11 @@ export class ShowProjectComponent {
 
   // Placeholder for adding a resource
   addResource() {
-    alert('Add Resource functionality coming soon!');
+    this.dialog.open(AddResourceDialogComponent, {
+      width: '600px',
+      data: { projectId: this.ActiveProjectService.activeProject()?.id }
+    });
+
   }
 
 

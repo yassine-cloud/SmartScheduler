@@ -280,7 +280,9 @@ export class ActiveProjectService {
         stat.completedTasks = this.tasks().filter((task) => task.status === TaskStatus.done).length;
         stat.inProgressTasks = this.tasks().filter((task) => task.status === TaskStatus.inProgress).length;
   
-        stat.totalResourceCost = this.resources().reduce((total, resource) => total + ( resource.cost ?? 0 ), 0);
+        this.resources().forEach((resource) => {
+          stat.totalResourceCost += Number(resource.cost) || 0;
+        });
         this.statics.set(stat);
       }
 

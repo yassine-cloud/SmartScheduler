@@ -171,12 +171,75 @@ async function deleteTaskDependency(taskId) {
 }
 
 
+async function updateTaskResource(taskId, resourcesId) {
+    const transaction = await sequelize.transaction();
+
+    let resourcesOfTask = await TaskResource.findByTaskId(taskId);
+
+    try {
+        if (resourcesId.length > 0) {
+            let promises = resourcesId.map(async (element) => {
+                const isNewResource = !resourcesOfTask.some(e => e.resourceId === element);
+
+                if (isNewResource) {
+                    return TaskResource.create(
+                        {
+                            taskId: taskId,
+                            resourceId: element,
+                        },
+                        { transaction }
+                    );
+                }
+                else resourcesOfTask = resourcesOfTask.filter(e => e.resourceId != element);
+            });
+
+            promises = promises.concat(resourcesOfTask.map(async (element) => {
+                return TaskResource.destroy(
+                    {
+                        where: {
+                            taskId: taskId,
+                            resourceId: element.resourceId,
+                        },
+                    },
+                    { transaction }
+                );
+            }));
+
+            await Promise.all(promises);
+        }
+        else if (resourcesId.length == 0) {
+            let promises = resourcesOfTask.map(async (element) => {
+                return TaskResource.destroy(
+                    {
+                        where: {
+                            taskId: taskId,
+                            resourceId: element.resourceId,
+                        },
+                    },
+                    { transaction }
+                );
+            });
+
+            await Promise.all(promises);
+        }
+
+        await transaction.commit();
+    } catch (error) {
+        await transaction.rollback();
+        console.error("Failed to add task resources:", error);
+        throw error;
+    }
+}
+
 module.exports = {
 
     async createTask(req, res) {
         try {
-            const { dependentTasksId } = req.body;
+            const { dependentTasksId, resourcesId } = req.body;
             const task = await Task.create(req.body);
+            if(resourcesId && resourcesId.length > 0){
+                await updateTaskResource(task.id, resourcesId);
+            }
             if (dependentTasksId.length > 0) {
                 await addTaskDependency(task.id, dependentTasksId);
             }
@@ -247,7 +310,7 @@ module.exports = {
     async updateTask(req, res) {
         try {
             const { id } = req.params;
-            const { dependentTasksId } = req.body;
+            const { dependentTasksId, resourcesId } = req.body;
 
             const oldTask = await Task.findByPk(id);
             if (!oldTask) {
@@ -259,6 +322,11 @@ module.exports = {
             });
             if (updated) {
                 // Check if status changes to "done" and update sub-tasks
+            if(resourcesId){
+                await updateTaskResource(id, resourcesId);
+            }
+            else 
+                await updateTaskResource(id, []);
             if (req.body.status && req.body.status === 'done' && oldTask.status !== 'done') {
                 const subTasks = await SubTask.findAll({ where: { taskId: id } }); // Fetch sub-tasks
                 const subTaskIds = subTasks.map((subTask) => subTask.id); // Extract IDs

@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { IResource } from '../../../../models/iresource';
+import { MatDialog } from '@angular/material/dialog';
+import { EditResourceDialogComponent } from '../../../resource/components/edit-resource-dialog/edit-resource-dialog.component';
+import { ActiveProjectService } from '../../services/active-project.service';
 
 @Component({
   selector: 'app-resource-list',
@@ -7,5 +10,18 @@ import { IResource } from '../../../../models/iresource';
   styleUrl: './resource-list.component.scss'
 })
 export class ResourceListComponent {
-  @Input() resources: IResource[] = [];
+
+  constructor(
+    private readonly dialog: MatDialog,
+    protected readonly ActiveProjectService: ActiveProjectService,
+  ) { }
+
+
+  onEditResource(resource: IResource) {
+    this.dialog.open(EditResourceDialogComponent, {
+      width: '600px',
+      data: { resource },
+    });
+
+  }
 }

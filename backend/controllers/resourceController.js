@@ -73,6 +73,7 @@ module.exports = {
             if (!resource) {
                 return res.status(404).json({ error: 'Resource not found' });
             }
+            await TaskResource.destroy({ where: { resourceId: id } });
             await resource.destroy();
             return res.status(204).send();
         } catch (error) {

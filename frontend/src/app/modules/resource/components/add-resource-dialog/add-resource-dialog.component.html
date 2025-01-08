@@ -32,5 +32,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button color="primary" (click)="onSave()" [disabled]="!resourceForm.valid">Add</button>
+  <button type="submit" mat-button color="primary" (click)="onSave()" [disabled]="!resourceForm.valid">Add</button>
 </mat-dialog-actions>

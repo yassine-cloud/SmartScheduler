@@ -104,6 +104,7 @@ export class EditTaskDialogComponent {
       return;
     }
 
+    console.log('Task to save:', this.task);
     this.dialogRef.close(this.task);
   }
 

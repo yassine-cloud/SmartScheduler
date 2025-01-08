@@ -89,7 +89,7 @@
           <small style="margin-left: 4px;">( {{ ActiveProjectService.resources().length }} resource(s) )</small>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-resource-list [resources]="ActiveProjectService.resources()"></app-resource-list>
+      <app-resource-list ></app-resource-list>
     </mat-expansion-panel>
   </ng-container>
   <button *ngIf="editAccess()" class="add-btn" mat-raised-button color="primary" (click)="addResource()">
