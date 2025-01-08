@@ -10,6 +10,7 @@ import { ActiveProjectService } from '../../services/active-project.service';
   styleUrl: './resource-list.component.scss'
 })
 export class ResourceListComponent {
+  @Input() canEdit : boolean = false;
 
   constructor(
     private readonly dialog: MatDialog,
@@ -18,6 +19,9 @@ export class ResourceListComponent {
 
 
   onEditResource(resource: IResource) {
+    if (!this.canEdit) {
+      return;
+    }
     this.dialog.open(EditResourceDialogComponent, {
       width: '600px',
       data: { resource },

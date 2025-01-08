@@ -107,4 +107,12 @@ export class TaskBoardComponent {
     return this.tasks.filter((task) => task.status === status);
   }
 
+  getUserImage(userId: string) {
+    return this.ActiveProjectService.members().find(m => m.user?.id === userId)?.user?.image;
+  }
+  getUserName2(userId: string) {
+    const member = this.ActiveProjectService.members().find(m => m.user?.id === userId);
+    return member?.user?.firstName + ' ' + member?.user?.lastName;
+  }
+
 }

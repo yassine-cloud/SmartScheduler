@@ -4,6 +4,24 @@
 
   <!-- Statistics Section -->
   <div class="statistics-section">
+    <!-- details section -->
+    <mat-card class="stat-card">
+      <mat-card-title>Project Details</mat-card-title>
+      <mat-card-content>
+        <p><strong>Description:</strong> {{ ActiveProjectService.activeProject()?.description }}</p>
+        <p>
+          <strong>Status:</strong>
+          <span 
+            [ngStyle]="{ 'color': getStatusColor(ActiveProjectService.activeProject()?.status) }">
+            {{ ActiveProjectService.activeProject()?.status }}
+          </span>
+        </p>
+        <p>
+          <strong>Budget:</strong> {{ ActiveProjectService.activeProject()?.budget | currency }}
+        </p>
+      </mat-card-content>
+    </mat-card>
+
     <mat-card class="stat-card">
       <mat-card-title>Project Timeline</mat-card-title>
       <mat-card-content>
@@ -89,7 +107,7 @@
           <small style="margin-left: 4px;">( {{ ActiveProjectService.resources().length }} resource(s) )</small>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-resource-list ></app-resource-list>
+      <app-resource-list [canEdit]="editAccess()" ></app-resource-list>
     </mat-expansion-panel>
   </ng-container>
   <button *ngIf="editAccess()" class="add-btn" mat-raised-button color="primary" (click)="addResource()">

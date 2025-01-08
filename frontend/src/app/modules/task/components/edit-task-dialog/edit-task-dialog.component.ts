@@ -32,7 +32,7 @@ export class EditTaskDialogComponent {
     this.project = data.project;
     this.dependentTasks = data.dependentTasks || [];
     this.selectedResources = data.selectedResources || [];
-    this.availableUsers = data.availableUsers ? data.availableUsers.filter((user: IProjectMember) => user.role != ProjectMemberRole.Owner) : [];
+    this.availableUsers = data.availableUsers ? data.availableUsers.filter((m: IProjectMember) => m.role === ProjectMemberRole.Developer || m.role === ProjectMemberRole.TesterQA || m.role === ProjectMemberRole.ProjectManager ) : [];
   }
 
   openDependentTasksDialog() {

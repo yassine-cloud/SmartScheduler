@@ -123,4 +123,13 @@ export class InviteComponent {
     })
   }
 
+  roleColors: { [key in ProjectMemberRole]: string } = {
+    [ProjectMemberRole.Owner]: '#4caf50', // Green
+    [ProjectMemberRole.ProjectManager]: '#2196f3', // Blue
+    [ProjectMemberRole.Developer]: '#ff9800', // Orange
+    [ProjectMemberRole.TesterQA]: '#9c27b0', // Purple
+    [ProjectMemberRole.Contributor]: '#ffc107', // Yellow
+    [ProjectMemberRole.Observer]: '#607d8b' // Gray
+  };
+  
 }

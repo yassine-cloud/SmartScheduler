@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProjectMemberService } from '../../../project-member/services/project-member.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../../../core/services/auth/auth.service';
+import { TaskStatus } from '../../../../models/itask';
 
 @Component({
   selector: 'app-member-card',
@@ -97,5 +98,17 @@ export class MemberCardComponent {
         });
       },
     });
+  }
+
+  getNumberOfTasks() {
+    return this.ActiveProjectService.tasks().filter(t => t.userId === this.member?.id).length;
+  }
+
+  getNumberOfTasksCompleted() {
+    return this.ActiveProjectService.tasks().filter(t => t.userId === this.member?.id && t.status === TaskStatus.done).length
+  }
+
+  canShowNbTasks(){
+    return this.role != ProjectMemberRole.Owner && this.role != ProjectMemberRole.Contributor && this.role != ProjectMemberRole.Observer;
   }
 }

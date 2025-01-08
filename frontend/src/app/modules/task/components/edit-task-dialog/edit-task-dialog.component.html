@@ -91,6 +91,7 @@
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Assign User</mat-label>
         <mat-select [(ngModel)]="task.userId">
+          <mat-option [value]="null">Unassigned</mat-option>
           <mat-option *ngFor="let user of availableUsers" [value]="user.user?.id">
           <img [src]="user.user?.image" style="width: 25px;border-radius: 50%;" [alt]="user.user?.lastName" />
             {{ user.user?.firstName }} {{ user.user?.lastName }} <span [ngStyle]="{'color': roleColors[user.role]}" > {{user.role}} </span>

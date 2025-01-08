@@ -26,13 +26,13 @@
         <p>{{ subTask.description }}</p>
       </div>
       <div>
-        <button (click)="editSubTask(subTask)" mat-raised-button color="primary">Edit</button>
-        <button (click)="deleteSubTask(subTask)" mat-raised-button color="warn">Delete</button>
+        <button *ngIf="canEdit" (click)="editSubTask(subTask)" mat-raised-button color="primary">Edit</button>
+        <button *ngIf="canEdit" (click)="deleteSubTask(subTask)" mat-raised-button color="warn">Delete</button>
       </div>
     </div>
     </ng-container>
   
-    <button (click)="addSubTask()">Add Subtask</button>
+    <button *ngIf="canEdit" (click)="addSubTask()">Add Subtask</button>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button (click)="closeDialog()">Return</button>

@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProjectInviteComponent } from '../../../project-member/components/project-invite/project-invite.component';
 import { AddTaskDialogComponent } from '../../../task/components/add-task-dialog/add-task-dialog.component';
 import { AddResourceDialogComponent } from '../../../resource/components/add-resource-dialog/add-resource-dialog.component';
+import { ProjectStatus } from '../../../../models/iproject';
 
 @Component({
   selector: 'app-show-project',
@@ -80,6 +81,19 @@ export class ShowProjectComponent {
 
   lowerAccess() : boolean{
     return this.ActiveProjectService.userRole() !== ProjectMemberRole.Observer && this.ActiveProjectService.userRole() !== ProjectMemberRole.Contributor;
+  }
+
+  getStatusColor(status: ProjectStatus | "Active" | undefined): string {
+    switch (status) {
+      case ProjectStatus.Active:
+        return 'green'; // Active projects appear green
+      case ProjectStatus.Completed:
+        return 'blue'; // Completed projects appear blue
+      case ProjectStatus.Cancelled:
+        return 'red'; // Cancelled projects appear red
+      default:
+        return 'gray'; // Default color for undefined status
+    }
   }
 
   roleColors: { [key in ProjectMemberRole]: string } = {
