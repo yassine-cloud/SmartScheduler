@@ -31,7 +31,7 @@ services:
     container_name: dbcontainer
     environment:
       MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_DATABASE: 'application'  
+      MYSQL_DATABASE: 'smartscheduler'  
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password' 
     volumes:
