@@ -1,6 +1,12 @@
 <div class="project-container">
   <!-- Project Name -->
-  <h1 class="project-title">{{ ActiveProjectService.activeProject()?.name }}</h1>
+  <h1 class="project-title">{{ ActiveProjectService.activeProject()?.name }} 
+     
+    <button *ngIf="!isOwner()" mat-fab extended color="primary" (click)="leaveProject()">
+      <mat-icon>logout</mat-icon>
+      Leave Project
+    </button>
+  </h1>
 
   <!-- Statistics Section -->
   <div class="statistics-section">
@@ -114,3 +120,12 @@
     Add Resource
   </button>
 </div>
+<button
+  *ngIf="editAccess()"
+  mat-fab
+  class="floating-action-button"
+  color="primary"
+  (click)="openDialog()"
+>
+  <mat-icon>menu</mat-icon>
+</button>

@@ -19,6 +19,9 @@
   </button>
   
   <div class="task-list">
+    <div *ngIf="paginatedProjects.length == 0" class="no-task">
+      <p>No Project</p>
+    </div>
     <div *ngFor="let project of paginatedProjects" class="task-card">
       <div class="task-name">{{ project.name }}</div>
       <div class="task-description">{{ project.description }}</div>

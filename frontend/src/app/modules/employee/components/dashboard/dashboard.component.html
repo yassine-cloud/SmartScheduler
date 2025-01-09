@@ -48,6 +48,9 @@
   <section class="projects-overview">
     <h2>Your Projects</h2>
     <div class="projects">
+      <ng-container *ngIf="DashboardService.userDashboard()?.projects?.length == 0">
+        <p>No Project</p>
+      </ng-container>
       <mat-card class="project-card" *ngFor="let project of DashboardService.userDashboard()?.projects">
         <mat-card-title>{{ project.name }}</mat-card-title>
         <mat-card-content>

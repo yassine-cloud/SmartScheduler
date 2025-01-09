@@ -7,6 +7,7 @@ import { ProjectInviteComponent } from '../../../project-member/components/proje
 import { AddTaskDialogComponent } from '../../../task/components/add-task-dialog/add-task-dialog.component';
 import { AddResourceDialogComponent } from '../../../resource/components/add-resource-dialog/add-resource-dialog.component';
 import { ProjectStatus } from '../../../../models/iproject';
+import { AIDialogComponent } from '../aidialog/aidialog.component';
 
 @Component({
   selector: 'app-show-project',
@@ -30,6 +31,20 @@ export class ShowProjectComponent {
       }
     });
   }  
+
+  leaveProject() {
+    if (confirm('Are you sure you want to leave this project?'))
+      this.ActiveProjectService.leaveProject();
+  }
+
+  openDialog() {
+    const projectDetails = this.ActiveProjectService.activeProject();
+    this.dialog.open(AIDialogComponent, {
+      width : '600px',
+      minHeight : "250px",
+      data: projectDetails,
+    });
+  }
 
   // Placeholder for adding a task
   addTask() {
@@ -81,6 +96,10 @@ export class ShowProjectComponent {
 
   lowerAccess() : boolean{
     return this.ActiveProjectService.userRole() !== ProjectMemberRole.Observer && this.ActiveProjectService.userRole() !== ProjectMemberRole.Contributor;
+  }
+
+  isOwner() : boolean {
+    return this.ActiveProjectService.userRole() === ProjectMemberRole.Owner;
   }
 
   getStatusColor(status: ProjectStatus | "Active" | undefined): string {

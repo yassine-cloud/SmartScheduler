@@ -26,6 +26,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MemberCardComponent } from './components/member-card/member-card.component';
 import { TaskBoardComponent } from './components/task-board/task-board.component';
 import { ResourceListComponent } from './components/resource-list/resource-list.component';
+import { AIDialogComponent } from './components/aidialog/aidialog.component';
+import { ResultDialogComponent } from './components/result-dialog/result-dialog.component';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { ResourceListComponent } from './components/resource-list/resource-list.
     ShowProjectComponent,
     MemberCardComponent,
     TaskBoardComponent,
-    ResourceListComponent
+    ResourceListComponent,
+    AIDialogComponent,
+    ResultDialogComponent
   ],
   imports: [
     CommonModule,

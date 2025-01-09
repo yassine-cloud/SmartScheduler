@@ -98,6 +98,30 @@ export class ActiveProjectService {
     });
   }
 
+  leaveProject() {
+    const currentUserId = this.authService.currentUser()?.id;
+    const currentMember = this.members().find((member) => member.userId === currentUserId);
+  
+    if (currentMember) {
+      this.projectMemberService.deleteProjectMember(currentMember.id!).subscribe({
+        next: () => {
+          this._snackBar.open('You have left the project!', '', { duration: 1500 });
+          this.router.navigate(['/project']);
+        },
+        error: (err) => {
+          console.error('Error leaving project:', err);
+        },
+      });
+    } else {
+      this._snackBar.open('You are not assigned to this Project, Contact the Owner.', '', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 1500,
+      });
+      this.router.navigate(['/project']);
+    }
+  }
+
   refrechProject() {
     this.projectService.getProjectById(this.activeProject()?.id!).subscribe({
       next: (project) => {
